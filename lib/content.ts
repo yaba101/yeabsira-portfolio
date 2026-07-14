@@ -393,3 +393,58 @@ export const TOKEN_USAGE: UsageRow[] = [
   { model: "Haiku 4.5", vendor: "Anthropic", tokens: 1_140_000, costUsd: 19 },
   { model: "GPT-5", vendor: "OpenAI", tokens: 730_000, costUsd: 12 },
 ]
+
+
+/* 
+Navigation Bar Variants:
+
+type Variant = "overlay" | "solid"
+
+const VARIANT_STYLES: Record<
+  Variant,
+  {
+    header: string
+    wordmark: string
+    nav: string
+    navLink: string
+    action: string
+    //  Hamburger / close trigger shown on small screens.
+    trigger: string
+    // Mobile dropdown panel surface.
+    panel: string
+    //  Links inside the mobile panel. 
+    panelLink: string
+    //  Hairline divider inside the mobile panel. 
+    panelDivider: string
+  }
+> = {
+  overlay: {
+    header: "",
+    wordmark: "text-overlay-cream",
+    nav: "text-overlay-cream/95",
+    navLink: "hover:text-overlay-cream",
+    action:
+      "border-overlay-cream/55 bg-overlay-ink/55 text-overlay-cream backdrop-blur-[6px] hover:bg-overlay-ink/70",
+    trigger:
+      "border-overlay-cream/55 bg-overlay-ink/55 text-overlay-cream backdrop-blur-[6px] hover:bg-overlay-ink/70",
+    panel:
+      "border-overlay-cream/15 bg-overlay-ink/85 text-overlay-cream backdrop-blur-xl",
+    panelLink: "text-overlay-cream/85 hover:text-overlay-cream",
+    panelDivider: "bg-overlay-cream/12",
+  },
+  solid: {
+    header: "border-b border-hairline bg-canvas/85 backdrop-blur",
+    wordmark: "text-ink",
+    nav: "text-body",
+    navLink: "hover:text-ink",
+    action:
+      "border-hairline-strong bg-surface-card text-ink hover:bg-surface-strong",
+    trigger:
+      "border-hairline-strong bg-surface-card text-ink hover:bg-surface-strong",
+    panel: "border-hairline bg-canvas/95 text-ink backdrop-blur-xl",
+    panelLink: "text-body hover:text-ink",
+    panelDivider: "bg-hairline",
+  },
+}
+
+*/
