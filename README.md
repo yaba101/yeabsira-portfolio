@@ -62,23 +62,23 @@ This repo is intentionally small - it holds the **content and media** so you can
 
 ## 🚀 How to use these starter files
 
-Clone this repo **alongside the tutorial** and code as you watch. Bun is recommended (it's what the video uses), but npm / pnpm / yarn work too.
+Clone this repo **alongside the tutorial** and code as you watch. pnpm is the supported package manager for this project.
 
 ```bash
 # 1. Clone the starter files
 git clone https://github.com/codebucks27/nextjs-portfolio-starter-template.git
 cd nextjs-portfolio-starter-template
 
-# 2. Install dependencies (Bun recommended - it's what the video uses)
-bun install        # or: npm install / pnpm install / yarn
+# 2. Install dependencies
+pnpm install
 
 # 3. Start the dev server
-bun dev            # or: npm run dev
+pnpm dev
 
 # 4. Open http://localhost:3000 and start building along with the video 🎬
 ```
 
-> ℹ️ **Requirements:** Node.js 20.9+ (or Bun 1.2+) and a GitHub account. No API keys or `.env` file needed - the weather and location features use free, keyless services.
+> ℹ️ **Requirements:** Node.js 20.9+ and pnpm. No API keys or `.env` file are needed—the weather and location features use free, keyless services.
 
 
 ## ⭐ Found this useful?
