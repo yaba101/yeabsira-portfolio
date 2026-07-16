@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { FaLinkedinIn } from "react-icons/fa6"
 import {
   siFigma,
   siD3,
@@ -25,8 +26,6 @@ import {
   CloudSun,
   Code,
   EnvelopeSimple,
-  GithubLogo,
-  LinkedinLogo,
   List,
   MagnifyingGlass,
   Moon,
@@ -152,8 +151,23 @@ function Header() {
       <div
         className={`shell flex items-center justify-between transition-[height] duration-500 ${scrolled ? "h-16" : "h-20"}`}
       >
-        <a href="#top" className="text-lg font-semibold tracking-tight">
-          {PROFILE.name}
+        <a
+          href="#top"
+          aria-label={`${PROFILE.name}, back to top`}
+          className="group flex items-center gap-3"
+        >
+          <span className="relative grid size-10 place-items-center overflow-hidden rounded-xl bg-[var(--ink)] text-[11px] font-semibold tracking-[-.03em] text-[var(--cream)] shadow-[0_4px_14px_rgba(0,0,0,.14)] transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3">
+            YM
+            <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-[var(--orange)]" />
+          </span>
+          <span className="hidden leading-none sm:block">
+            <span className="block text-sm font-semibold tracking-[-.02em]">
+              Yeabsira
+            </span>
+            <span className="mt-1 block font-mono text-[8px] tracking-[.12em] uppercase opacity-55">
+              Product engineer
+            </span>
+          </span>
         </a>
         <nav
           aria-label="Primary"
@@ -265,7 +279,7 @@ function Hero() {
   const [night, setNight] = useState(false)
   const [weather, setWeather] = useState<WeatherDisplay>({
     city: "Addis Ababa",
-    country: "ET",
+    country: "Ethiopia",
     temperature: 65,
     description: "Partly cloudy",
   })
@@ -324,14 +338,14 @@ function Hero() {
             <p className="mb-7 font-mono text-xs tracking-[.16em] text-white/70 uppercase">
               Frontend Product Engineer · Next.js
             </p>
-            <h1 className="display max-w-4xl text-[clamp(3.5rem,7.8vw,6rem)] font-light">
+            <h1 className="hero-title display max-w-4xl text-[clamp(3.5rem,7.8vw,6rem)] font-normal text-white">
               Product interfaces,
               <br />
               thoughtfully built,
               <br />
               ready for real users.
             </h1>
-            <p className="mt-7 max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
+            <p className="hero-body mt-7 max-w-xl text-base leading-relaxed text-white md:text-lg">
               I&apos;m {PROFILE.name}, a frontend product engineer building
               responsive, production-ready experiences with Next.js, React, and
               TypeScript.
@@ -920,26 +934,33 @@ function Footer() {
               ))}
             </nav>
             <div className="flex gap-2">
-              {[
-                [GithubLogo, "GitHub", PROFILE.github],
-                [LinkedinLogo, "LinkedIn", PROFILE.linkedin],
-                [EnvelopeSimple, "Email", `mailto:${PROFILE.email}`],
-              ].map(([Icon, label, href]) => (
-                <a
-                  key={label as string}
-                  href={href as string}
-                  aria-label={label as string}
-                  className="grid h-11 w-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
+              <a
+                href={PROFILE.github}
+                aria-label="GitHub"
+                className="grid size-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
+              >
+                <BrandIcon icon={siGithub} className="size-[18px]" />
+              </a>
+              <a
+                href={PROFILE.linkedin}
+                aria-label="LinkedIn"
+                className="grid size-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
+              >
+                <FaLinkedinIn size={18} />
+              </a>
+              <a
+                href={`mailto:${PROFILE.email}`}
+                aria-label="Email"
+                className="grid size-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
+              >
+                <EnvelopeSimple size={18} />
+              </a>
             </div>
           </div>
         </div>
         <div className="footer-wave" aria-hidden />
         <div className="flex flex-col gap-3 py-5 font-mono text-[10px] text-white/35 md:flex-row md:justify-between">
-          <span>© 2026 Yeabsira Mekuria · Addis Ababa, ET</span>
+          <span>© 2026 Yeabsira Mekuria · Addis Ababa, Ethiopia</span>
           <a
             href="#top"
             className="inline-flex items-center gap-2 transition-colors hover:text-white"

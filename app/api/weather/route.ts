@@ -26,7 +26,10 @@ export async function GET() {
   const latitude = Number(h.get("x-vercel-ip-latitude") ?? 9.03)
   const longitude = Number(h.get("x-vercel-ip-longitude") ?? 38.74)
   const city = h.get("x-vercel-ip-city") ?? "Addis Ababa"
-  const country = h.get("x-vercel-ip-country") ?? "ET"
+  const countryCode = h.get("x-vercel-ip-country") ?? "ET"
+  const country =
+    new Intl.DisplayNames(["en"], { type: "region" }).of(countryCode) ??
+    "Ethiopia"
 
   try {
     const response = await fetch(
@@ -46,7 +49,7 @@ export async function GET() {
   } catch {
     return NextResponse.json({
       city: "Addis Ababa",
-      country: "ET",
+      country: "Ethiopia",
       temperature: 65,
       description: "Partly cloudy",
     } satisfies WeatherDisplay)
