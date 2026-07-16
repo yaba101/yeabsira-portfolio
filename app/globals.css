@@ -40,6 +40,9 @@
 html {
   scroll-behavior: smooth;
 }
+section[id] {
+  scroll-margin-top: 5rem;
+}
 body {
   margin: 0;
   background: var(--canvas);
@@ -60,6 +63,23 @@ a {
 }
 :focus-visible {
   outline: 2px solid var(--orange);
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  translate: 0 -180%;
+  border-radius: 999px;
+  background: var(--orange);
+  padding: 0.7rem 1rem;
+  color: white;
+  font-size: 0.875rem;
+  transition: translate 160ms ease;
+}
+.skip-link:focus {
+  translate: 0;
 }
 
 .shell {
@@ -183,6 +203,23 @@ a {
 @keyframes project-timer {
   to {
     --timer-angle: 360deg;
+  }
+}
+
+.project-progress {
+  transform-origin: left;
+  animation: project-progress 6s linear forwards;
+}
+.project-progress.paused,
+.project-timer.paused {
+  animation-play-state: paused;
+}
+@keyframes project-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 

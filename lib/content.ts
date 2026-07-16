@@ -238,8 +238,10 @@ export const PROJECTS: readonly Project[] = [
 export const CAPABILITIES = [
   {
     num: "— 01",
-    title: "Frontend engineering",
-    body: "Production Next.js and React applications built with clear component boundaries, typed data flows, responsive behavior, and maintainable UI architecture.",
+    title: "Build product interfaces",
+    body: "Responsive Next.js experiences connected to real product data.",
+    evidence:
+      "Evidence: client and expert portals, dashboards, onboarding, and eligibility flows at adavia.",
     items: [
       "Next.js",
       "React",
@@ -253,8 +255,10 @@ export const CAPABILITIES = [
   },
   {
     num: "— 02",
-    title: "Product UI & UX",
-    body: "Complex journeys translated into calm interfaces: onboarding, portals, quizzes, dashboards, forms, navigation, and interactive data experiences.",
+    title: "Simplify complex workflows",
+    body: "Dense requirements shaped into clear journeys and interaction systems.",
+    evidence:
+      "Evidence: React Flow family-tree UI and guided citizenship eligibility experiences.",
     items: [
       "UI/UX design",
       "Figma delivery",
@@ -266,8 +270,10 @@ export const CAPABILITIES = [
   },
   {
     num: "— 03",
-    title: "Production quality",
-    body: "Frontend quality improved through reusable patterns, performance work, production states, analytics, observability, and careful mobile polish.",
+    title: "Improve production quality",
+    body: "Interfaces refined through testing, analytics, observability, and responsive QA.",
+    evidence:
+      "Evidence: Playwright coverage, PostHog insights, Sentry monitoring, and reusable UI patterns.",
     items: [
       "Design systems",
       "Tailwind CSS",

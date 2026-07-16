@@ -1,8 +1,14 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useState } from "react"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { useEffect, useRef, useState } from "react"
+import {
+  AnimatePresence,
+  domAnimation,
+  LazyMotion,
+  m,
+  useReducedMotion,
+} from "motion/react"
 import { FaLinkedinIn } from "react-icons/fa6"
 import {
   siFigma,
@@ -46,7 +52,7 @@ import {
   PROJECTS,
   STACK_PANES,
 } from "@/lib/content"
-import type { WeatherDisplay } from "@/app/api/weather/route"
+import type { WeatherDisplay } from "@/lib/weather"
 
 function BrandIcon({
   icon,
@@ -81,26 +87,11 @@ const TOOL_ICONS = [
   siSentry,
 ] as const
 
-function Reveal({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  const reduced = useReducedMotion()
-  return (
-    <motion.div
-      className={className}
-      initial={reduced ? false : { opacity: 0, y: 24 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  )
-}
+const CAPABILITY_BRANDS = [
+  [siNextdotjs, siReact, siTypescript],
+  [siFigma, siReact, siD3],
+  [siPosthog, siSentry, siTypescript],
+] as const
 
 function SectionHeading({
   number,
@@ -114,24 +105,20 @@ function SectionHeading({
   children: React.ReactNode
 }) {
   return (
-    <Reveal>
-      <div className="mb-14 grid gap-8 pt-5 md:mb-24 md:grid-cols-[.7fr_3fr]">
-        <div className="flex gap-8 font-mono text-xs text-[var(--muted)]">
-          <span className="text-[var(--orange)]">{number}</span>
-          <span>{label}</span>
-        </div>
-        <div>
-          {aside && (
-            <p className="mb-5 font-mono text-xs text-[var(--muted)]">
-              {aside}
-            </p>
-          )}
-          <h2 className="max-w-[980px] text-[clamp(2.4rem,4.25vw,4rem)] leading-[1.06] font-normal tracking-[-.04em]">
-            {children}
-          </h2>
-        </div>
+    <div className="mb-14 grid gap-8 pt-5 md:mb-24 md:grid-cols-[.7fr_3fr]">
+      <div className="flex gap-8 font-mono text-xs text-[var(--muted)]">
+        <span className="text-[var(--orange)]">{number}</span>
+        <span>{label}</span>
       </div>
-    </Reveal>
+      <div>
+        {aside && (
+          <p className="mb-5 font-mono text-xs text-[var(--muted)]">{aside}</p>
+        )}
+        <h2 className="max-w-[980px] text-[clamp(2.4rem,4.25vw,4rem)] leading-[1.06] font-normal tracking-[-.04em]">
+          {children}
+        </h2>
+      </div>
+    </div>
   )
 }
 
@@ -275,22 +262,14 @@ function CareerCard() {
   )
 }
 
-function Hero() {
+function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
   const [night, setNight] = useState(false)
-  const [weather, setWeather] = useState<WeatherDisplay>({
-    city: "Addis Ababa",
-    country: "Ethiopia",
-    temperature: 65,
-    description: "Partly cloudy",
-  })
+  const reducedMotion = useReducedMotion()
+  const weather = initialWeather
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       setNight(localStorage.getItem("hero-lighting") === "night")
     })
-    fetch("/api/weather")
-      .then((r) => r.json())
-      .then(setWeather)
-      .catch(() => undefined)
     return () => cancelAnimationFrame(frame)
   }, [])
   const toggle = () =>
@@ -305,11 +284,14 @@ function Hero() {
       className="relative min-h-[100dvh] overflow-hidden bg-[var(--night)] text-[var(--cream)]"
     >
       <video
+        aria-hidden="true"
+        tabIndex={-1}
         key={night ? "night" : "day"}
-        autoPlay
+        autoPlay={!reducedMotion}
         muted
         loop
         playsInline
+        preload="metadata"
         poster={
           night
             ? "/assets/hero-night-poster.webp"
@@ -329,7 +311,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/28 via-transparent to-black/48" />
       <div className="shell relative z-10 flex min-h-[100dvh] flex-col justify-between pt-28 pb-8">
         <div className="grid flex-1 items-center gap-10 lg:grid-cols-[1fr_360px]">
-          <motion.div
+          <m.div
             className="relative z-0"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -364,7 +346,7 @@ function Hero() {
                 Get in touch
               </a>
             </div>
-          </motion.div>
+          </m.div>
           <div className="flex flex-col items-end gap-4">
             <button
               type="button"
@@ -417,8 +399,14 @@ function PracticeStrip() {
 }
 
 function SelectedWork() {
+  const carouselRef = useRef<HTMLFieldSetElement>(null)
   const [active, setActive] = useState(0)
   const [cycle, setCycle] = useState(0)
+  const [hoverPaused, setHoverPaused] = useState(false)
+  const [focusPaused, setFocusPaused] = useState(false)
+  const [pageVisible, setPageVisible] = useState(true)
+  const reduced = useReducedMotion()
+  const paused = hoverPaused || focusPaused || !pageVisible || Boolean(reduced)
   const project = PROJECTS[active]
   const selectProject = (index: number) => {
     setActive(index)
@@ -427,14 +415,35 @@ function SelectedWork() {
   const move = (delta: number) =>
     selectProject((active + delta + PROJECTS.length) % PROJECTS.length)
   useEffect(() => {
+    if (paused) return
     const timer = window.setTimeout(() => {
       setActive((value) => (value + 1) % PROJECTS.length)
       setCycle((value) => value + 1)
     }, 6000)
     return () => window.clearTimeout(timer)
-  }, [cycle])
+  }, [cycle, paused])
+  useEffect(() => {
+    const update = () => setPageVisible(document.visibilityState === "visible")
+    document.addEventListener("visibilitychange", update)
+    return () => document.removeEventListener("visibilitychange", update)
+  }, [])
+  useEffect(() => {
+    const carousel = carouselRef.current
+    if (!carousel) return
+    const focusIn = () => setFocusPaused(true)
+    const focusOut = (event: FocusEvent) => {
+      if (!carousel.contains(event.relatedTarget as Node | null))
+        setFocusPaused(false)
+    }
+    carousel.addEventListener("focusin", focusIn)
+    carousel.addEventListener("focusout", focusOut)
+    return () => {
+      carousel.removeEventListener("focusin", focusIn)
+      carousel.removeEventListener("focusout", focusOut)
+    }
+  }, [])
   return (
-    <section id="work" className="section-pad">
+    <section id="work" className="section-pad" aria-label="Selected work">
       <div className="shell">
         <SectionHeading
           number="01"
@@ -444,7 +453,23 @@ function SelectedWork() {
           Frontend work shaped around complex journeys, clear interaction, and
           production quality.
         </SectionHeading>
-        <div className="grid items-stretch gap-8 lg:grid-cols-[330px_minmax(0,1fr)]">
+        <fieldset
+          ref={carouselRef}
+          aria-label="Project carousel"
+          className="grid items-stretch gap-8 lg:grid-cols-[330px_minmax(0,1fr)]"
+          onMouseEnter={() => setHoverPaused(true)}
+          onMouseLeave={() => setHoverPaused(false)}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowRight") {
+              event.preventDefault()
+              move(1)
+            }
+            if (event.key === "ArrowLeft") {
+              event.preventDefault()
+              move(-1)
+            }
+          }}
+        >
           <div className="flex min-h-[540px] flex-col justify-between rounded-xl bg-[var(--soft)] p-5">
             <div role="tablist" aria-label="Project list">
               {PROJECTS.map((item, index) => (
@@ -452,8 +477,14 @@ function SelectedWork() {
                   type="button"
                   key={item.title}
                   role="tab"
+                  id={`project-tab-${index}`}
+                  aria-controls={`project-panel-${index}`}
                   aria-selected={active === index}
-                  onClick={() => selectProject(index)}
+                  tabIndex={active === index ? 0 : -1}
+                  onClick={() => {
+                    setFocusPaused(true)
+                    selectProject(index)
+                  }}
                   className={`group flex w-full items-center gap-4 rounded-lg px-2 py-3.5 text-left text-[15px] transition-colors ${active === index ? "bg-[var(--paper)] text-[var(--ink)]" : "text-[var(--muted)] hover:text-[var(--ink)]"}`}
                 >
                   <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full font-mono text-[11px]">
@@ -461,7 +492,7 @@ function SelectedWork() {
                     {active === index && (
                       <span
                         key={`${active}-${cycle}`}
-                        className="project-timer absolute inset-0 rounded-full"
+                        className={`project-timer absolute inset-0 rounded-full ${paused ? "paused" : ""}`}
                         aria-hidden
                       />
                     )}
@@ -470,38 +501,69 @@ function SelectedWork() {
                 </button>
               ))}
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-[var(--canvas)] p-3">
-              <span className="font-mono text-[10px] text-[var(--muted)]">
-                Auto advance · 6 sec
-              </span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  aria-label="Previous project"
-                  onClick={() => move(-1)}
-                  className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
-                >
-                  <ArrowLeft />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next project"
-                  onClick={() => move(1)}
-                  className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
-                >
-                  <ArrowRight />
-                </button>
+            <div className="rounded-lg bg-[var(--canvas)] p-3">
+              <div className="mb-3 flex items-center justify-between font-mono text-[10px] text-[var(--muted)]">
+                <span>
+                  {paused ? "Rotation paused" : "Next project · 6 sec"}
+                </span>
+                <span>
+                  {active + 1} / {PROJECTS.length}
+                </span>
+              </div>
+              <div
+                className="mb-3 h-1 overflow-hidden rounded-full bg-[var(--line)]"
+                aria-hidden
+              >
+                <span
+                  key={`${active}-${cycle}-${paused}`}
+                  className={`project-progress block h-full rounded-full bg-[var(--orange)] ${paused ? "paused" : ""}`}
+                />
+              </div>
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    aria-label="Previous project"
+                    onClick={() => {
+                      setFocusPaused(true)
+                      move(-1)
+                    }}
+                    className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
+                  >
+                    <ArrowLeft />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next project"
+                    onClick={() => {
+                      setFocusPaused(true)
+                      move(1)
+                    }}
+                    className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
+                  >
+                    <ArrowRight />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div aria-live="polite" className="min-w-0">
+          <div
+            id={`project-panel-${active}`}
+            role="tabpanel"
+            aria-labelledby={`project-tab-${active}`}
+            aria-live="polite"
+            className="min-w-0"
+          >
             <AnimatePresence mode="wait">
-              <motion.article
+              <m.article
                 key={project.title}
-                initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                initial={reduced ? false : { opacity: 0, x: 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={reduced ? undefined : { opacity: 0, x: -12 }}
+                transition={{
+                  duration: reduced ? 0 : 0.4,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="grid min-h-[540px] overflow-hidden rounded-xl border bg-[var(--paper)] md:grid-cols-2"
               >
                 <div className="relative min-h-[330px] bg-neutral-200 md:min-h-full">
@@ -545,10 +607,10 @@ function SelectedWork() {
                     </span>
                   </div>
                 </div>
-              </motion.article>
+              </m.article>
             </AnimatePresence>
           </div>
-        </div>
+        </fieldset>
       </div>
     </section>
   )
@@ -562,32 +624,60 @@ function Capabilities() {
           Frontend engineering that connects product intent, interface craft,
           and dependable delivery.
         </SectionHeading>
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="space-y-3">
           {CAPABILITIES.map((capability, index) => {
             const Icon = CAPABILITY_ICONS[index]
             return (
-              <Reveal
+              <article
                 key={capability.title}
-                className="rounded-xl bg-[var(--canvas)] p-6"
+                className="grid gap-8 rounded-xl bg-[var(--canvas)] p-6 md:grid-cols-[90px_1fr_1.05fr] md:items-center md:p-8"
               >
-                <div className="mb-20 flex items-start justify-between">
-                  <span className="font-mono text-xs text-[var(--muted)]">
-                    {capability.num}
+                <div className="flex items-center justify-between md:block">
+                  <span className="font-mono text-xs text-[var(--orange)]">
+                    0{index + 1}
                   </span>
-                  <div className="h-12 w-12 text-[var(--orange)]">
+                  <div className="mt-0 size-11 text-[var(--orange)] md:mt-8">
                     <Icon />
                   </div>
                 </div>
-                <h3 className="text-2xl tracking-tight">{capability.title}</h3>
-                <p className="mt-4 leading-relaxed text-[var(--body)]">
-                  {capability.body}
-                </p>
-                <ul className="mt-8 grid grid-cols-2 gap-y-2 rounded-lg bg-[var(--soft)] p-4 text-xs text-[var(--muted)]">
-                  {capability.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </Reveal>
+                <div>
+                  <h3 className="text-2xl tracking-[-.03em] md:text-3xl">
+                    {capability.title}
+                  </h3>
+                  <p className="mt-3 max-w-lg leading-6 text-[var(--body)]">
+                    {capability.body}
+                  </p>
+                  <div className="mt-5 flex gap-2">
+                    {CAPABILITY_BRANDS[index].map((icon) => (
+                      <span
+                        key={icon.slug}
+                        title={icon.title}
+                        className="grid size-9 place-items-center rounded-lg bg-[var(--soft)] text-[var(--muted)]"
+                      >
+                        <BrandIcon icon={icon} className="size-4" />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-xl bg-[var(--soft)] p-5">
+                  <p className="font-mono text-[9px] tracking-[.12em] text-[var(--orange)] uppercase">
+                    Project evidence
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-[var(--body)]">
+                    {capability.evidence}
+                  </p>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {capability.items.slice(0, 4).map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-full bg-[var(--paper)] px-3 py-1.5 text-[10px] text-[var(--muted)]"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
             )
           })}
         </div>
@@ -635,7 +725,7 @@ function Approach() {
         </SectionHeading>
         <div className="relative mt-8 rounded-2xl bg-[rgba(244,242,233,.035)] px-5 py-10 md:px-9 md:py-14">
           <div className="absolute top-1/2 right-10 left-10 hidden h-px -translate-y-1/2 bg-[rgba(244,242,233,.12)] md:block" />
-          <motion.div
+          <m.div
             aria-hidden
             className="absolute top-1/2 left-[8%] hidden size-3 -translate-y-1/2 rounded-full bg-[var(--orange)] shadow-[0_0_24px_rgba(239,77,8,.8)] md:block"
             animate={{ left: ["8%", "92%"] }}
@@ -643,7 +733,7 @@ function Approach() {
           />
           <ol className="relative grid gap-4 md:grid-cols-4 md:gap-6">
             {APPROACH_STEPS.map((step, index) => (
-              <motion.li
+              <m.li
                 key={step.k}
                 initial={false}
                 className={`group relative grid min-h-[250px] grid-cols-[54px_1fr] gap-4 rounded-xl bg-[var(--ink)] p-5 md:block md:min-h-[370px] md:bg-transparent md:p-0 ${index % 2 === 0 ? "md:pt-0" : "md:pt-[190px]"}`}
@@ -686,7 +776,7 @@ function Approach() {
                 {index < APPROACH_STEPS.length - 1 && (
                   <span className="absolute top-[54px] bottom-[-16px] left-[46px] w-px bg-[rgba(239,77,8,.3)] md:hidden" />
                 )}
-              </motion.li>
+              </m.li>
             ))}
           </ol>
         </div>
@@ -980,12 +1070,19 @@ function Footer() {
   )
 }
 
-export function PortfolioPage() {
+export function PortfolioPage({
+  initialWeather,
+}: {
+  initialWeather: WeatherDisplay
+}) {
   return (
-    <>
+    <LazyMotion features={domAnimation} strict>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <Header />
-      <main>
-        <Hero />
+      <main id="main-content">
+        <Hero initialWeather={initialWeather} />
         <PracticeStrip />
         <SelectedWork />
         <Capabilities />
@@ -994,6 +1091,6 @@ export function PortfolioPage() {
         <AboutContact />
       </main>
       <Footer />
-    </>
+    </LazyMotion>
   )
 }
