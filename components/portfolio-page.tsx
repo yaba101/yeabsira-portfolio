@@ -5,11 +5,13 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import {
   siFigma,
+  siD3,
   siGithub,
   siJavascript,
   siNextdotjs,
   siPosthog,
   siReact,
+  siResend,
   siSentry,
   siTailwindcss,
   siTypescript,
@@ -70,6 +72,8 @@ const TOOL_ICONS = [
   siJavascript,
   siTailwindcss,
   siFigma,
+  siD3,
+  siResend,
   siPosthog,
   siSentry,
 ] as const

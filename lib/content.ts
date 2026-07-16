@@ -244,9 +244,11 @@ export const CAPABILITIES = [
       "Next.js",
       "React",
       "TypeScript",
+      "JavaScript",
+      "Zustand",
+      "nuqs",
       "TanStack Query",
       "REST APIs",
-      "Node.js",
     ],
   },
   {
@@ -271,6 +273,7 @@ export const CAPABILITIES = [
       "Tailwind CSS",
       "PostHog",
       "Sentry",
+      "Playwright",
       "Performance",
       "Accessibility",
     ],
@@ -310,9 +313,10 @@ export const STACK_PANES = [
     items: [
       ["Next.js", "framework"],
       ["TypeScript", "language"],
+      ["JavaScript", "language"],
       ["React 19", "ui"],
       ["Tailwind CSS", "styling"],
-      ["TanStack Query", "server state"],
+      ["Zustand / nuqs", "client & URL state"],
     ],
   },
   {
@@ -320,9 +324,10 @@ export const STACK_PANES = [
     items: [
       ["Responsive systems", "layout"],
       ["React Flow", "interactive UI"],
+      ["D3", "data visualization"],
       ["Figma", "design delivery"],
       ["Forms & onboarding", "journeys"],
-      ["REST APIs", "integration"],
+      ["Resend", "email integration"],
     ],
   },
   {
@@ -330,6 +335,7 @@ export const STACK_PANES = [
     items: [
       ["PostHog", "analytics"],
       ["Sentry", "observability"],
+      ["Playwright", "end-to-end testing"],
       ["Accessibility", "inclusive UI"],
       ["Performance", "experience"],
     ],
