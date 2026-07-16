@@ -134,11 +134,11 @@ export const NAV_LINKS = [
 // --- Practice strip -------------------------------------------------------
 // components/practice-strip.tsx — the thin band of practice areas.
 export const PRACTICE_AREAS = [
-  { k: "01", v: "AI SaaS products" },
-  { k: "02", v: "Full-stack systems" },
-  { k: "03", v: "Workflow automation" },
-  { k: "04", v: "Product UI" },
-  { k: "05", v: "API-first architecture" },
+  { k: "01", v: "Next.js products" },
+  { k: "02", v: "React systems" },
+  { k: "03", v: "Product UI / UX" },
+  { k: "04", v: "Responsive interfaces" },
+  { k: "05", v: "Frontend quality" },
 ] as const
 
 // --- Selected work --------------------------------------------------------
@@ -158,12 +158,12 @@ export type Project = {
 export const PROJECTS: readonly Project[] = [
   {
     index: "01",
-    title: "AI Interior Design Platform",
+    title: "AI Citizenship Platform",
     description:
-      "A workflow-driven SaaS product for interior designers and architects, combining image transformation, regional processing, and public API delivery.",
+      "Led frontend and UI/UX execution for an AI-assisted citizenship product, taking the experience from initial foundation to production-ready customer journeys.",
     year: "2026",
-    status: "Live · v3.2",
-    tags: ["AI SaaS", "Image workflows", "API", "B2B"],
+    status: "Lead frontend",
+    tags: ["Next.js", "TypeScript", "Product UI", "AI-assisted"],
     href: "#",
     image: "/assets/projects/interior-design-platform.png",
     imageAlt:
@@ -171,12 +171,12 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     index: "02",
-    title: "AI Headshot Generator",
+    title: "Client & Expert Portals",
     description:
-      "A polished consumer and team headshot experience with model training, image editing, credits, and premium generation flows.",
+      "Built connected portal experiences for clients and experts, including dashboards, account states, API-driven screens, and reusable interface patterns.",
     year: "2025",
-    status: "Live",
-    tags: ["AI Images", "Product UX", "Credits", "Teams"],
+    status: "Production",
+    tags: ["React", "TanStack Query", "Dashboards", "REST APIs"],
     href: "#",
     image: "/assets/projects/headshot-generator.png",
     imageAlt:
@@ -184,12 +184,12 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     index: "03",
-    title: "Automation & Agent Systems",
+    title: "Eligibility & Onboarding",
     description:
-      "Internal tools, workflow engines, and agent-backed systems designed to reduce manual operations and speed up product execution.",
+      "Designed and shipped guided onboarding and eligibility journeys that turn complex citizenship requirements into understandable, responsive product flows.",
     year: "2024",
-    status: "Private",
-    tags: ["Automation", "Agents", "Workflows", "Infra"],
+    status: "Production",
+    tags: ["UX flows", "Forms", "Responsive", "State design"],
     href: "#",
     image: "/assets/projects/automation-agent-systems.png",
     imageAlt:
@@ -197,12 +197,12 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     index: "04",
-    title: "Document Intelligence",
+    title: "Interactive Family Tree",
     description:
-      "Extraction, classification, and review tooling that turns dense unstructured documents into structured, queryable records.",
+      "Created a React Flow-based family-tree interface for exploring relationships and eligibility data inside a complex, domain-specific workflow.",
     year: "2024",
-    status: "Live",
-    tags: ["NLP", "Extraction", "Review UX", "Pipelines"],
+    status: "Product feature",
+    tags: ["React Flow", "Interaction", "Data UI", "TypeScript"],
     href: "#",
     image: "/assets/projects/document-intelligence.png",
     imageAlt:
@@ -210,12 +210,12 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     index: "05",
-    title: "Data Labeling Platform",
+    title: "Analytics & Product Quality",
     description:
-      "A collaborative annotation surface with quality controls, reviewer queues, and exports tuned for fast model iteration.",
+      "Improved production quality through analytics views, responsive polish, reusable UI systems, performance work, monitoring, and complete edge states.",
     year: "2023",
-    status: "Live",
-    tags: ["Labeling", "Collaboration", "QA", "Tooling"],
+    status: "Continuous",
+    tags: ["PostHog", "Sentry", "Performance", "Design systems"],
     href: "#",
     image: "/assets/projects/data-labeling-platform.png",
     imageAlt:
@@ -229,41 +229,41 @@ export const PROJECTS: readonly Project[] = [
 export const CAPABILITIES = [
   {
     num: "— 01",
-    title: "Product engineering",
-    body: "End-to-end SaaS systems built for actual production load. Type-safe APIs, predictable data layers, and a frontend that survives real users without ceremony.",
+    title: "Frontend engineering",
+    body: "Production Next.js and React applications built with clear component boundaries, typed data flows, responsive behavior, and maintainable UI architecture.",
     items: [
       "Next.js",
-      "Hono / tRPC",
-      "Postgres",
-      "Drizzle",
-      "Stripe",
-      "Edge / Workers",
+      "React",
+      "TypeScript",
+      "TanStack Query",
+      "REST APIs",
+      "Node.js",
     ],
   },
   {
     num: "— 02",
-    title: "AI workflow systems",
-    body: "Image, text, and agent pipelines that respect latency, cost, and failure modes. The hard parts — queues, retries, observability — built in from day one.",
+    title: "Product UI & UX",
+    body: "Complex journeys translated into calm interfaces: onboarding, portals, quizzes, dashboards, forms, navigation, and interactive data experiences.",
     items: [
-      "OpenAI",
-      "Replicate",
-      "Vercel AI SDK",
-      "Inngest",
-      "Queues",
-      "Vector DBs",
+      "UI/UX design",
+      "Figma delivery",
+      "React Flow",
+      "Dashboards",
+      "Forms",
+      "Responsive UI",
     ],
   },
   {
     num: "— 03",
-    title: "Interface design",
-    body: "Calm, opinionated product UI with restraint. Typography, hierarchy, and motion treated as engineering disciplines — not decoration applied at the end.",
+    title: "Production quality",
+    body: "Frontend quality improved through reusable patterns, performance work, production states, analytics, observability, and careful mobile polish.",
     items: [
       "Design systems",
-      "Tailwind",
-      "Radix / shadcn",
-      "Framer Motion",
-      "Figma",
-      "Prototyping",
+      "Tailwind CSS",
+      "PostHog",
+      "Sentry",
+      "Performance",
+      "Accessibility",
     ],
   },
 ] as const
@@ -273,23 +273,23 @@ export const CAPABILITIES = [
 export const APPROACH_STEPS = [
   {
     k: "— Step 01",
-    t: "Understand the business goal",
-    d: "Before any UI or schema. What does this product change for the people using it, and how do we know it worked?",
+    t: "Understand the journey",
+    d: "Start with the user, the business goal, and the decisions the interface needs to make easy.",
   },
   {
     k: "— Step 02",
-    t: "Design the smallest useful product",
-    d: "The shortest path between a real user and a real outcome. Everything else is deferred until the core is honest.",
+    t: "Shape the interface system",
+    d: "Turn requirements and Figma direction into reusable patterns, responsive states, and a clear interaction model.",
   },
   {
     k: "— Step 03",
-    t: "Build with production architecture",
-    d: "Type-safe from edge to database. Observability, retries, and migrations as first-class — not bolted on under pressure.",
+    t: "Build the complete flow",
+    d: "Connect typed UI to real APIs, handling loading, empty, error, and success states as part of the feature.",
   },
   {
     k: "— Step 04",
-    t: "Refine until it feels effortless",
-    d: "The last 20% is where products stop feeling like demos. Latency, copy, motion, edge cases — sanded down until they disappear.",
+    t: "Measure, observe, refine",
+    d: "Use feedback, PostHog, Sentry, and hands-on QA to improve performance, usability, and production confidence.",
   },
 ] as const
 
@@ -303,35 +303,35 @@ export const STACK_PANES = [
       ["TypeScript", "language"],
       ["React 19", "ui"],
       ["Tailwind CSS", "styling"],
-      ["Radix / shadcn", "primitives"],
+      ["TanStack Query", "server state"],
     ],
   },
   {
-    title: "Server & data",
+    title: "Product UI",
     items: [
-      ["Node.js / Hono", "runtime"],
-      ["Postgres", "database"],
-      ["Drizzle ORM", "data"],
-      ["Cloudflare", "edge"],
-      ["Vercel", "deploy"],
+      ["Responsive systems", "layout"],
+      ["React Flow", "interactive UI"],
+      ["Figma", "design delivery"],
+      ["Forms & onboarding", "journeys"],
+      ["REST APIs", "integration"],
     ],
   },
   {
-    title: "AI & workflows",
+    title: "Quality",
     items: [
-      ["Vercel AI SDK", "orchestration"],
-      ["OpenAI / Anthropic", "models"],
-      ["Replicate", "image"],
-      ["Inngest", "workflows"],
+      ["PostHog", "analytics"],
+      ["Sentry", "observability"],
+      ["Accessibility", "inclusive UI"],
+      ["Performance", "experience"],
     ],
   },
   {
-    title: "Infra",
+    title: "Workflow",
     items: [
-      ["Docker", "runtime"],
-      ["Resend", "email"],
-      ["Stripe", "payments"],
-      ["PostHog / Sentry", "observability"],
+      ["Git / GitHub", "version control"],
+      ["Claude Code", "AI tooling"],
+      ["Codex", "AI tooling"],
+      ["Cursor", "AI tooling"],
     ],
   },
 ] as const
@@ -339,11 +339,11 @@ export const STACK_PANES = [
 // --- About ----------------------------------------------------------------
 // components/contact.tsx (About band) — the meta definition list. [key, value].
 export const ABOUT_META = [
-  ["Based", "India · GMT +5:30"],
-  ["Practice", "AI-first SaaS products"],
-  ["Years shipping", "6+"],
-  ["Availability", "Selected product builds"],
-  ["Engagements", "Fractional · Build · Advisory"],
+  ["Based", "Addis Ababa, Ethiopia"],
+  ["Role", "Frontend / Next.js Developer"],
+  ["Experience", "4+ years in frontend product teams"],
+  ["Current focus", "Product UI, frontend systems, responsive quality"],
+  ["Education", "Computer Science · HiLCoE"],
 ] as const
 
 // --- Site footer ----------------------------------------------------------
@@ -362,16 +362,15 @@ export const FOOTER_COLUMNS = [
   {
     title: "Contact",
     links: [
-      ["codebucks.agency", "mailto:codebucks27@gmail.com"],
+      ["Email Yeabsira", "mailto:yabumek46@gmail.com"],
       ["Start a project", "#contact"],
     ],
   },
   {
     title: "Social",
     links: [
-      ["GitHub ↗", "https://github.com/codebucks27"],
-      ["LinkedIn ↗", "https://www.linkedin.com/in/codebucks/"],
-      ["X / Twitter ↗", "https://x.com/code_bucks"],
+      ["GitHub ↗", "https://github.com/yaba101"],
+      ["LinkedIn ↗", "https://www.linkedin.com/in/yeabsira-mekuria"],
     ],
   },
 ] as const
@@ -393,7 +392,6 @@ export const TOKEN_USAGE: UsageRow[] = [
   { model: "Haiku 4.5", vendor: "Anthropic", tokens: 1_140_000, costUsd: 19 },
   { model: "GPT-5", vendor: "OpenAI", tokens: 730_000, costUsd: 12 },
 ]
-
 
 /* 
 Navigation Bar Variants:
