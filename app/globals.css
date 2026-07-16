@@ -1,83 +1,194 @@
-/* shadcn defaults — used by components/ui/*. We layer our editorial design tokens on top during the tutorial. */
-
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @theme inline {
-    --font-sans: var(--font-sans);
-    --font-mono: var(--font-mono);
-
-    /* shadcn primitives read these — keep them so components/ui/* render. */
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-
-    /* Radius scale */
-    --radius-xs: 4px;
-    --radius-sm: 6px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-2xl: 20px;
-    --radius-3xl: 24px;
-    --radius-pill: 9999px;
-
-    /* Spacing scale */
-    --spacing-xxs: 4px;
-    --spacing-xs: 8px;
-    --spacing-sm: 12px;
-    --spacing-base: 16px;
-    --spacing-md: 20px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    --spacing-xxl: 48px;
-    --spacing-section: 80px;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --color-background: var(--canvas);
+  --color-foreground: var(--ink);
+  --color-primary: var(--orange);
+  --color-border: var(--line);
+  --color-muted: var(--soft);
+  --color-muted-foreground: var(--muted);
 }
 
 :root {
-    --background: #ffffff;
-    --foreground: #0a0a0a;
-    --card: #ffffff;
-    --card-foreground: #0a0a0a;
-    --popover: #ffffff;
-    --popover-foreground: #0a0a0a;
-    --primary: #1a1a1a;
-    --primary-foreground: #fafafa;
-    --secondary: #f4f4f5;
-    --secondary-foreground: #1a1a1a;
-    --muted: #f4f4f5;
-    --muted-foreground: #71717a;
-    --accent: #f4f4f5;
-    --accent-foreground: #1a1a1a;
-    --destructive: #e11d48;
-    --border: #e4e4e7;
-    --input: #e4e4e7;
-    --ring: #a1a1aa;
-
-    --radius: 0.5rem;
+  --canvas: #f5f5f0;
+  --soft: #eeeee8;
+  --paper: #fbfbf8;
+  --ink: #24231e;
+  --body: #55524c;
+  --muted: #767269;
+  --line: #c8b8aa;
+  --orange: #ef4d08;
+  --night: #11120f;
+  --night-soft: #181713;
+  --night-line: rgba(239, 77, 8, 0.2);
+  --night-line-soft: rgba(244, 242, 233, 0.09);
+  --cream: #f4f2e9;
+  --background: var(--canvas);
+  --foreground: var(--ink);
+  --border: var(--line);
+  --ring: var(--orange);
+  --radius: 0.5rem;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+* {
+  border-color: var(--line);
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+}
+::selection {
+  background: var(--orange);
+  color: white;
+}
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+button,
+a {
+  outline-offset: 4px;
+}
+:focus-visible {
+  outline: 2px solid var(--orange);
+}
+
+.shell {
+  width: min(100% - 80px, 1440px);
+  margin-inline: auto;
+}
+.display {
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+.section-pad {
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+.hairline {
+  border-color: var(--line);
+}
+
+.hero-status {
+  position: relative;
+  border-radius: 12px;
+  background: rgba(12, 12, 10, 0.34);
+  box-shadow: inset 0 1px 0 rgba(239, 77, 8, 0.18);
+  backdrop-filter: blur(10px);
+}
+
+.hero-status::before {
+  content: "";
+  position: absolute;
+  right: 2%;
+  bottom: calc(100% - 4px);
+  left: 2%;
+  height: 18px;
+  border-top: 1px solid rgba(239, 77, 8, 0.42);
+  border-radius: 50%;
+  transform: rotate(-0.35deg);
+  pointer-events: none;
+}
+
+.profile-orbit {
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(239, 77, 8, 0.34),
+    rgba(239, 77, 8, 0.06) 48%,
+    transparent 72%
+  );
+  filter: blur(4px);
+}
+
+.dark-panel {
+  border-color: var(--night-line);
+  background: linear-gradient(
+    145deg,
+    rgba(239, 77, 8, 0.045),
+    rgba(244, 242, 233, 0.025)
+  );
+}
+
+.dark-panel > * {
+  border-color: var(--night-line-soft);
+}
+
+.footer-wave {
+  position: relative;
+  height: 42px;
+  overflow: hidden;
+}
+
+.footer-wave::before {
+  content: "";
+  position: absolute;
+  left: -4%;
+  top: 18px;
+  width: 108%;
+  height: 48px;
+  border: 1px solid var(--night-line);
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-0.8deg);
+}
+
+.footer-wave::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  top: 26px;
+  width: 70%;
+  height: 34px;
+  border: 1px solid rgba(244, 242, 233, 0.055);
+  border-radius: 50% 50% 0 0;
+  transform: rotate(1.2deg);
+}
+
+@property --timer-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.project-timer {
+  --timer-angle: 0deg;
+  background: conic-gradient(
+    var(--orange) var(--timer-angle),
+    var(--line) 0deg
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
+  animation: project-timer 6s linear forwards;
+}
+
+@keyframes project-timer {
+  to {
+    --timer-angle: 360deg;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100% - 28px, 1240px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
