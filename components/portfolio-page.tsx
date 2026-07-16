@@ -500,23 +500,6 @@ function SelectedWork() {
               ))}
             </div>
             <div className="rounded-lg bg-[var(--canvas)] p-3">
-              <div className="mb-3 flex items-center justify-between font-mono text-[10px] text-[var(--muted)]">
-                <span>
-                  {paused ? "Rotation paused" : "Next project · 6 sec"}
-                </span>
-                <span>
-                  {active + 1} / {PROJECTS.length}
-                </span>
-              </div>
-              <div
-                className="mb-3 h-1 overflow-hidden rounded-full bg-[var(--line)]"
-                aria-hidden
-              >
-                <span
-                  key={`${active}-${cycle}-${paused}`}
-                  className={`project-progress block h-full rounded-full bg-[var(--orange)] ${paused ? "paused" : ""}`}
-                />
-              </div>
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button

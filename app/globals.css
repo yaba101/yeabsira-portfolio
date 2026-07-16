@@ -224,21 +224,8 @@ a {
   }
 }
 
-.project-progress {
-  transform-origin: left;
-  animation: project-progress 6s linear forwards;
-}
-.project-progress.paused,
 .project-timer.paused {
   animation-play-state: paused;
-}
-@keyframes project-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
 }
 
 @media (max-width: 640px) {
