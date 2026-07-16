@@ -12,6 +12,15 @@
  * Each export is consumed by the component named in its comment.
  */
 
+export const PROFILE = {
+  name: "Yeabsira Mekuria",
+  handle: "yaba101",
+  email: "yabumek46@gmail.com",
+  github: "https://github.com/yaba101",
+  linkedin: "https://www.linkedin.com/in/yeabsira-mekuria",
+  location: "Addis Ababa, Ethiopia",
+} as const
+
 /* ============================================================
    DESIGN TOKENS — copy/paste into app/globals.css during the
    design-system step of the tutorial.

@@ -4,6 +4,18 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import {
+  siFigma,
+  siGithub,
+  siJavascript,
+  siNextdotjs,
+  siPosthog,
+  siReact,
+  siSentry,
+  siTailwindcss,
+  siTypescript,
+  type SimpleIcon,
+} from "simple-icons"
+import {
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -25,10 +37,42 @@ import {
   CAPABILITIES,
   NAV_LINKS,
   PRACTICE_AREAS,
+  PROFILE,
   PROJECTS,
   STACK_PANES,
 } from "@/lib/content"
 import type { WeatherDisplay } from "@/app/api/weather/route"
+
+function BrandIcon({
+  icon,
+  className = "h-5 w-5",
+}: {
+  icon: SimpleIcon
+  className?: string
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      role="img"
+      aria-label={icon.title}
+      fill="currentColor"
+    >
+      <path d={icon.path} />
+    </svg>
+  )
+}
+
+const TOOL_ICONS = [
+  siNextdotjs,
+  siReact,
+  siTypescript,
+  siJavascript,
+  siTailwindcss,
+  siFigma,
+  siPosthog,
+  siSentry,
+] as const
 
 function Reveal({
   children,
@@ -101,7 +145,7 @@ function Header() {
         className={`shell flex items-center justify-between transition-[height] duration-500 ${scrolled ? "h-16" : "h-20"}`}
       >
         <a href="#top" className="text-lg font-semibold tracking-tight">
-          Yeabsira Mekuria
+          {PROFILE.name}
         </a>
         <nav
           aria-label="Primary"
@@ -124,6 +168,7 @@ function Header() {
           Let&apos;s talk
         </a>
         <button
+          type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen(!open)}
@@ -197,11 +242,11 @@ function CareerCard() {
           <p className="mt-1 text-xs text-white/42">Ethiopia · Remote</p>
         </div>
         <a
-          href="https://github.com/yaba101"
+          href={PROFILE.github}
           className="col-span-2 flex items-center justify-between rounded-xl bg-[var(--orange)] px-4 py-3 text-sm text-white transition-colors hover:bg-[#d94306]"
         >
           <span>Explore my code</span>
-          <GithubLogo size={18} />
+          <BrandIcon icon={siGithub} className="h-[18px] w-[18px]" />
         </a>
       </div>
     </aside>
@@ -249,7 +294,6 @@ function Hero() {
             : "/assets/hero-day-poster.webp"
         }
         className="absolute inset-0 h-full w-full object-cover"
-        aria-hidden
       >
         <source
           src={
@@ -280,9 +324,8 @@ function Hero() {
               ready for real users.
             </h1>
             <p className="mt-7 max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
-              I&apos;m Yeabsira Mekuria, a frontend engineer building
-              responsive, production-ready experiences with Next.js, React, and
-              TypeScript.
+              I&apos;m {PROFILE.name}, a frontend engineer building responsive,
+              production-ready experiences with Next.js, React, and TypeScript.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -301,6 +344,7 @@ function Hero() {
           </motion.div>
           <div className="flex flex-col items-end gap-4">
             <button
+              type="button"
               onClick={toggle}
               role="switch"
               aria-checked={night}
@@ -382,6 +426,7 @@ function SelectedWork() {
             <div role="tablist" aria-label="Project list">
               {PROJECTS.map((item, index) => (
                 <button
+                  type="button"
                   key={item.title}
                   role="tab"
                   aria-selected={active === index}
@@ -408,6 +453,7 @@ function SelectedWork() {
               </span>
               <div className="flex gap-2">
                 <button
+                  type="button"
                   aria-label="Previous project"
                   onClick={() => move(-1)}
                   className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
@@ -415,6 +461,7 @@ function SelectedWork() {
                   <ArrowLeft />
                 </button>
                 <button
+                  type="button"
                   aria-label="Next project"
                   onClick={() => move(1)}
                   className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
@@ -605,6 +652,17 @@ function Stack() {
               TanStack Query, PostHog, and Sentry carry the experience from
               interface design through reliable production delivery.
             </p>
+            <div className="mt-8 flex max-w-md flex-wrap gap-2">
+              {TOOL_ICONS.map((icon) => (
+                <div
+                  key={icon.slug}
+                  title={icon.title}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(244,242,233,.06)] text-white/55 transition-colors hover:bg-[rgba(239,77,8,.12)] hover:text-[var(--orange)]"
+                >
+                  <BrandIcon icon={icon} className="h-[18px] w-[18px]" />
+                </div>
+              ))}
+            </div>
           </div>
           <div className="overflow-hidden rounded-xl bg-[rgba(239,77,8,.045)] p-2">
             <div className="flex items-center gap-2 px-4 py-3">
@@ -750,13 +808,13 @@ function AboutContact() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
-              href="mailto:yabumek46@gmail.com"
+              href={`mailto:${PROFILE.email}`}
               className="rounded-full bg-white px-6 py-3 text-sm text-[var(--orange)]"
             >
               Start a conversation
             </a>
             <a
-              href="https://github.com/yaba101"
+              href={PROFILE.github}
               className="rounded-full bg-black/15 px-6 py-3 text-sm backdrop-blur-sm transition-colors hover:bg-black/25"
             >
               View GitHub
@@ -781,7 +839,7 @@ function Footer() {
               Let&apos;s turn the idea into something people can use.
             </h2>
             <a
-              href="mailto:yabumek46@gmail.com"
+              href={`mailto:${PROFILE.email}`}
               className="mt-9 inline-flex items-center gap-3 rounded-full bg-[var(--orange)] px-6 py-3 text-sm text-white transition-transform active:scale-[.98]"
             >
               Start a conversation <ArrowUpRight size={17} />
@@ -811,13 +869,9 @@ function Footer() {
             </nav>
             <div className="flex gap-2">
               {[
-                [GithubLogo, "GitHub", "https://github.com/yaba101"],
-                [
-                  LinkedinLogo,
-                  "LinkedIn",
-                  "https://www.linkedin.com/in/yeabsira-mekuria",
-                ],
-                [EnvelopeSimple, "Email", "mailto:yabumek46@gmail.com"],
+                [GithubLogo, "GitHub", PROFILE.github],
+                [LinkedinLogo, "LinkedIn", PROFILE.linkedin],
+                [EnvelopeSimple, "Email", `mailto:${PROFILE.email}`],
               ].map(([Icon, label, href]) => (
                 <a
                   key={label as string}
