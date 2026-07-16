@@ -13,8 +13,9 @@ const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 // Basic metadata shown in the browser tab and search results.
 export const metadata: Metadata = {
-  title: "Modern Portfolio — Starter",
-  description: "Starter project for the modern portfolio build-along tutorial.",
+  title: "Yeabsira Mekuria — Frontend & Next.js Developer",
+  description:
+    "Frontend developer in Addis Ababa building responsive product experiences with Next.js, React, and TypeScript.",
 }
 
 type RootLayoutProps = Readonly<{
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         fontMono.variable
       )}
     >
-      <body>{children}</body>
+      <body className="overflow-x-hidden">{children}</body>
     </html>
   )
 }
