@@ -135,7 +135,6 @@ export const PROFILE = {
 export const NAV_LINKS = [
   { label: "Work", href: "#work" },
   { label: "Capabilities", href: "#capabilities" },
-  { label: "Inspector", href: "#inspector" },
   { label: "Stack", href: "#stack" },
   { label: "Notes", href: "#notes" },
 ] as const
