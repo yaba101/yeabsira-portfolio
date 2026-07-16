@@ -14,9 +14,9 @@ const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 // Basic metadata shown in the browser tab and search results.
 export const metadata: Metadata = {
   metadataBase: new URL("https://github.com/yaba101"),
-  title: "Yeabsira Mekuria — Frontend & Next.js Developer",
+  title: "Yeabsira Mekuria — Frontend Product Engineer",
   description:
-    "Frontend developer in Addis Ababa building responsive product experiences with Next.js, React, and TypeScript.",
+    "Frontend product engineer in Addis Ababa building responsive product experiences with Next.js, React, and TypeScript.",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     shortcut: "/icon.svg",
@@ -24,24 +24,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    title: "Yeabsira Mekuria — Frontend & Next.js Developer",
+    title: "Yeabsira Mekuria — Frontend Product Engineer",
     description:
-      "Frontend developer building responsive product experiences with Next.js, React, and TypeScript.",
+      "Frontend product engineer building responsive experiences with Next.js, React, and TypeScript.",
     siteName: "Yeabsira Mekuria",
     images: [
       {
         url: "/og-yeabsira.png",
         width: 1200,
         height: 630,
-        alt: "Yeabsira Mekuria, Frontend and Next.js Developer",
+        alt: "Yeabsira Mekuria, Frontend Product Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yeabsira Mekuria — Frontend & Next.js Developer",
+    title: "Yeabsira Mekuria — Frontend Product Engineer",
     description:
-      "Frontend developer building responsive product experiences with Next.js, React, and TypeScript.",
+      "Frontend product engineer building responsive experiences with Next.js, React, and TypeScript.",
     images: ["/og-yeabsira.png"],
   },
 }

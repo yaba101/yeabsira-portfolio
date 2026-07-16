@@ -223,7 +223,7 @@ function CareerCard() {
             <span className="h-2 w-2 rounded-full bg-[var(--orange)]" />
           </div>
           <p className="mt-8 text-2xl font-light tracking-[-.025em]">
-            Lead Frontend Engineer
+            Frontend Product Engineer
           </p>
           <p className="mt-2 text-sm text-white/48">
             Next.js · React · Product UI
@@ -318,7 +318,7 @@ function Hero() {
             transition={{ duration: 0.8 }}
           >
             <p className="mb-7 font-mono text-xs tracking-[.16em] text-white/70 uppercase">
-              Frontend Developer · Next.js Developer
+              Frontend Product Engineer · Next.js
             </p>
             <h1 className="display max-w-4xl text-[clamp(3.5rem,7.8vw,6rem)] font-light">
               Product interfaces,
@@ -328,8 +328,9 @@ function Hero() {
               ready for real users.
             </h1>
             <p className="mt-7 max-w-xl text-base leading-relaxed text-white/75 md:text-lg">
-              I&apos;m {PROFILE.name}, a frontend engineer building responsive,
-              production-ready experiences with Next.js, React, and TypeScript.
+              I&apos;m {PROFILE.name}, a frontend product engineer building
+              responsive, production-ready experiences with Next.js, React, and
+              TypeScript.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -366,7 +367,7 @@ function Hero() {
         <div className="hero-status grid gap-3 px-4 py-3.5 font-mono text-[10px] tracking-[.08em] text-white/85 uppercase md:grid-cols-[1fr_auto_1fr] md:items-center">
           <span className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--orange)]" />
-            Open to frontend opportunities
+            Open to frontend product opportunities
           </span>
           <span className="hidden items-center gap-2 text-white/55 md:flex">
             Explore <ArrowDown />
@@ -806,7 +807,7 @@ function AboutContact() {
             Building a product that needs a thoughtful frontend?
           </h2>
           <p className="mt-7 max-w-xl text-white/75">
-            I&apos;m interested in frontend roles and product work where
+            I&apos;m interested in frontend product roles and work where
             interface quality, responsive behavior, and reliable delivery
             matter.
           </p>
@@ -855,7 +856,7 @@ function Footer() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                 <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
               </span>
-              Open to frontend opportunities
+              Open to frontend product opportunities
             </div>
             <nav
               aria-label="Footer"

@@ -355,7 +355,7 @@ export const STACK_PANES = [
 // components/contact.tsx (About band) — the meta definition list. [key, value].
 export const ABOUT_META = [
   ["Based", "Addis Ababa, Ethiopia"],
-  ["Role", "Frontend / Next.js Developer"],
+  ["Role", "Frontend Product Engineer"],
   ["Experience", "4+ years in frontend product teams"],
   ["Current focus", "Product UI, frontend systems, responsive quality"],
   ["Education", "Computer Science · HiLCoE"],
