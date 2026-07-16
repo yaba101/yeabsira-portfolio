@@ -23,11 +23,15 @@ import {
   ArrowRight,
   ArrowUpRight,
   CloudSun,
+  Code,
   EnvelopeSimple,
   GithubLogo,
   LinkedinLogo,
   List,
+  MagnifyingGlass,
   Moon,
+  Pulse,
+  SquaresFour,
   Sun,
   X,
 } from "@phosphor-icons/react"
@@ -579,6 +583,32 @@ function Capabilities() {
 }
 
 function Approach() {
+  const phases = [
+    {
+      icon: MagnifyingGlass,
+      phase: "Understand",
+      output: "Journey map",
+      signal: "Problem + user",
+    },
+    {
+      icon: SquaresFour,
+      phase: "Shape",
+      output: "Interface system",
+      signal: "Flows + states",
+    },
+    {
+      icon: Code,
+      phase: "Build",
+      output: "Working product",
+      signal: "UI + APIs",
+    },
+    {
+      icon: Pulse,
+      phase: "Refine",
+      output: "Measured quality",
+      signal: "Data + feedback",
+    },
+  ] as const
   return (
     <section
       id="process"
@@ -589,46 +619,63 @@ function Approach() {
           Four deliberate moves from a loose idea to a product that feels
           inevitable.
         </SectionHeading>
-        <ol className="grid gap-px overflow-hidden rounded-xl bg-white/[.08] md:grid-cols-2">
-          {APPROACH_STEPS.map((step, index) => (
-            <motion.li
-              key={step.k}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{
-                duration: 0.55,
-                delay: index * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="group relative min-h-[320px] bg-[var(--ink)] p-7 md:p-9"
-            >
-              <div className="flex items-start justify-between">
-                <span className="font-mono text-xs text-[var(--orange)]">
-                  0{index + 1}
-                </span>
-                <span className="font-mono text-[10px] text-white/25">
-                  {index === 0
-                    ? "Define"
-                    : index === 1
-                      ? "Reduce"
-                      : index === 2
-                        ? "Build"
-                        : "Refine"}
-                </span>
-              </div>
-              <div className="absolute inset-x-7 bottom-8 md:inset-x-9">
-                <h3 className="max-w-sm text-2xl leading-tight tracking-[-.03em] md:text-3xl">
-                  {step.t}
-                </h3>
-                <p className="mt-4 max-w-md text-sm leading-6 text-white/50">
-                  {step.d}
-                </p>
-              </div>
-              <span className="absolute right-0 bottom-0 h-px w-0 bg-[var(--orange)] transition-[width] duration-500 group-hover:w-full" />
-            </motion.li>
-          ))}
-        </ol>
+        <div className="relative mt-8 rounded-2xl bg-[rgba(244,242,233,.035)] px-5 py-10 md:px-9 md:py-14">
+          <div className="absolute top-1/2 right-10 left-10 hidden h-px -translate-y-1/2 bg-[rgba(244,242,233,.12)] md:block" />
+          <motion.div
+            aria-hidden
+            className="absolute top-1/2 left-[8%] hidden size-3 -translate-y-1/2 rounded-full bg-[var(--orange)] shadow-[0_0_24px_rgba(239,77,8,.8)] md:block"
+            animate={{ left: ["8%", "92%"] }}
+            transition={{ duration: 7, ease: "linear", repeat: Infinity }}
+          />
+          <ol className="relative grid gap-4 md:grid-cols-4 md:gap-6">
+            {APPROACH_STEPS.map((step, index) => (
+              <motion.li
+                key={step.k}
+                initial={false}
+                className={`group relative grid min-h-[250px] grid-cols-[54px_1fr] gap-4 rounded-xl bg-[var(--ink)] p-5 md:block md:min-h-[370px] md:bg-transparent md:p-0 ${index % 2 === 0 ? "md:pt-0" : "md:pt-[190px]"}`}
+              >
+                <div
+                  className={`relative z-10 flex size-[54px] items-center justify-center rounded-full bg-[var(--orange)] text-white md:absolute md:left-1/2 md:-translate-x-1/2 ${index % 2 === 0 ? "md:top-[179px]" : "md:top-[179px]"}`}
+                >
+                  {(() => {
+                    const Icon = phases[index].icon
+                    return <Icon size={22} weight="regular" />
+                  })()}
+                  <span className="absolute -top-2 -right-2 grid size-5 place-items-center rounded-full bg-[var(--cream)] font-mono text-[9px] text-[var(--ink)]">
+                    {index + 1}
+                  </span>
+                </div>
+                <div
+                  className={`md:absolute md:right-0 md:left-0 ${index % 2 === 0 ? "md:top-0 md:pb-12" : "md:bottom-0 md:pt-12"}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] tracking-[.12em] text-[var(--orange)] uppercase">
+                      {phases[index].phase}
+                    </span>
+                    <span className="font-mono text-[9px] text-white/40">
+                      {phases[index].signal}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 max-w-sm text-xl leading-tight tracking-[-.03em] md:text-2xl">
+                    {step.t}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-white/60">
+                    {step.d}
+                  </p>
+                  <div className="mt-5 flex items-center gap-2 rounded-lg bg-white/[.045] px-3 py-2.5">
+                    <span className="size-1.5 rounded-full bg-[var(--orange)]" />
+                    <span className="font-mono text-[10px] text-white/68">
+                      Output · {phases[index].output}
+                    </span>
+                  </div>
+                </div>
+                {index < APPROACH_STEPS.length - 1 && (
+                  <span className="absolute top-[54px] bottom-[-16px] left-[46px] w-px bg-[rgba(239,77,8,.3)] md:hidden" />
+                )}
+              </motion.li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   )
