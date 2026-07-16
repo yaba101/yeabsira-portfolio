@@ -135,9 +135,9 @@ export const PROFILE = {
 export const NAV_LINKS = [
   { label: "Work", href: "#work" },
   { label: "Capabilities", href: "#capabilities" },
-  { label: "Approach", href: "#process" },
+  { label: "Inspector", href: "#inspector" },
   { label: "Stack", href: "#stack" },
-  { label: "About", href: "#about" },
+  { label: "Notes", href: "#notes" },
 ] as const
 
 // --- Practice strip -------------------------------------------------------
@@ -308,6 +308,33 @@ export const APPROACH_STEPS = [
     k: "— Step 04",
     t: "Measure, observe, refine",
     d: "Use feedback, PostHog, Sentry, and hands-on QA to improve performance, usability, and production confidence.",
+  },
+] as const
+
+export const FIELD_NOTES = [
+  {
+    type: "Building",
+    title: "A portfolio that demonstrates quality instead of claiming it",
+    summary:
+      "Turning accessibility, responsive behavior, and edge states into an interface visitors can test themselves.",
+    date: "Now",
+    tags: ["Accessibility", "Product UI"],
+  },
+  {
+    type: "Learning",
+    title: "Better motion begins with knowing when to stop it",
+    summary:
+      "Exploring visibility-aware animation, reduced-motion fallbacks, and motion that explains state changes.",
+    date: "This week",
+    tags: ["Motion", "React"],
+  },
+  {
+    type: "Decision",
+    title: "Why production states belong in the first design pass",
+    summary:
+      "Loading, empty, error, and recovery states are the product—not cleanup work after the happy path.",
+    date: "Recently",
+    tags: ["Systems", "UX"],
   },
 ] as const
 

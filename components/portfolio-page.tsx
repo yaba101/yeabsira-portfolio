@@ -30,22 +30,26 @@ import {
   ArrowRight,
   ArrowUpRight,
   CloudSun,
-  Code,
+  Check,
+  Desktop,
+  DeviceMobile,
   EnvelopeSimple,
+  Eye,
+  Gauge,
   List,
-  MagnifyingGlass,
   Moon,
-  Pulse,
-  SquaresFour,
+  ShieldCheck,
   Sun,
+  TextT,
+  WarningCircle,
   X,
 } from "@phosphor-icons/react"
 
 import { CAPABILITY_ICONS } from "@/lib/capability-icons"
 import {
   ABOUT_META,
-  APPROACH_STEPS,
   CAPABILITIES,
+  FIELD_NOTES,
   NAV_LINKS,
   PRACTICE_AREAS,
   PROFILE,
@@ -686,102 +690,334 @@ function Capabilities() {
   )
 }
 
-function Approach() {
-  const phases = [
-    {
-      icon: MagnifyingGlass,
-      phase: "Understand",
-      output: "Journey map",
-      signal: "Problem + user",
-    },
-    {
-      icon: SquaresFour,
-      phase: "Shape",
-      output: "Interface system",
-      signal: "Flows + states",
-    },
-    {
-      icon: Code,
-      phase: "Build",
-      output: "Working product",
-      signal: "UI + APIs",
-    },
-    {
-      icon: Pulse,
-      phase: "Refine",
-      output: "Measured quality",
-      signal: "Data + feedback",
-    },
-  ] as const
+type InspectorViewport = "mobile" | "desktop"
+type InspectorContrast = "AA" | "AAA"
+type InspectorState = "ready" | "error" | "loading"
+const NOTE_FILTERS = ["All", "Building", "Learning", "Decision"] as const
+
+function InterfaceInspector() {
+  const [viewport, setViewport] = useState<InspectorViewport>("desktop")
+  const [contrast, setContrast] = useState<InspectorContrast>("AA")
+  const [textScale, setTextScale] = useState(100)
+  const [reducedMotion, setReducedMotion] = useState(false)
+  const [productState, setProductState] = useState<InspectorState>("ready")
+  const isError = productState === "error"
+  const isLoading = productState === "loading"
+  const score = contrast === "AAA" ? "9.2:1" : "5.8:1"
+
   return (
     <section
-      id="process"
+      id="inspector"
       className="section-pad overflow-hidden bg-[var(--ink)] text-[var(--cream)]"
     >
       <div className="shell">
-        <SectionHeading number="03" label="Approach" aside="How I work">
-          Four deliberate moves from a loose idea to a product that feels
-          inevitable.
+        <SectionHeading
+          number="03"
+          label="Interface inspector"
+          aside="Try the details"
+        >
+          Good interfaces should survive more than the happy path.
         </SectionHeading>
-        <div className="relative mt-8 rounded-2xl bg-[rgba(244,242,233,.035)] px-5 py-10 md:px-9 md:py-14">
-          <div className="absolute top-1/2 right-10 left-10 hidden h-px -translate-y-1/2 bg-[rgba(244,242,233,.12)] md:block" />
-          <m.div
-            aria-hidden
-            className="absolute top-1/2 left-[8%] hidden size-3 -translate-y-1/2 rounded-full bg-[var(--orange)] shadow-[0_0_24px_rgba(239,77,8,.8)] md:block"
-            animate={{ left: ["8%", "92%"] }}
-            transition={{ duration: 7, ease: "linear", repeat: Infinity }}
-          />
-          <ol className="relative grid gap-4 md:grid-cols-4 md:gap-6">
-            {APPROACH_STEPS.map((step, index) => (
-              <m.li
-                key={step.k}
-                initial={false}
-                className={`group relative grid min-h-[250px] grid-cols-[54px_1fr] gap-4 rounded-xl bg-[var(--ink)] p-5 md:block md:min-h-[370px] md:bg-transparent md:p-0 ${index % 2 === 0 ? "md:pt-0" : "md:pt-[190px]"}`}
+
+        <div className="inspector-shell mt-10 overflow-hidden rounded-2xl bg-[#181914]">
+          <div className="flex flex-col gap-4 bg-white/[.035] px-5 py-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-3">
+              <span className="grid size-9 place-items-center rounded-lg bg-[var(--orange)] text-white">
+                <ShieldCheck size={19} />
+              </span>
+              <div>
+                <p className="text-sm font-medium">Product quality lab</p>
+                <p className="font-mono text-[9px] text-white/38">
+                  LIVE COMPONENT · CHANGE THE CONDITIONS
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 font-mono text-[9px] text-emerald-300/80">
+              <span className="size-1.5 rounded-full bg-emerald-400" />
+              All checks responding
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-[300px_minmax(0,1fr)_250px]">
+            <div className="space-y-6 bg-black/10 p-5 md:p-7">
+              <InspectorControl icon={<Desktop size={15} />} label="Viewport">
+                <SegmentedControl
+                  value={viewport}
+                  options={[
+                    {
+                      value: "mobile",
+                      label: "Mobile",
+                      icon: <DeviceMobile />,
+                    },
+                    { value: "desktop", label: "Desktop", icon: <Desktop /> },
+                  ]}
+                  onChange={(value) => setViewport(value as InspectorViewport)}
+                />
+              </InspectorControl>
+              <InspectorControl icon={<Eye size={15} />} label="Contrast">
+                <SegmentedControl
+                  value={contrast}
+                  options={[
+                    { value: "AA", label: "WCAG AA" },
+                    { value: "AAA", label: "WCAG AAA" },
+                  ]}
+                  onChange={(value) => setContrast(value as InspectorContrast)}
+                />
+              </InspectorControl>
+              <InspectorControl
+                icon={<TextT size={15} />}
+                label={`Text scale · ${textScale}%`}
               >
-                <div
-                  className={`relative z-10 flex size-[54px] items-center justify-center rounded-full bg-[var(--orange)] text-white md:absolute md:left-1/2 md:-translate-x-1/2 ${index % 2 === 0 ? "md:top-[179px]" : "md:top-[179px]"}`}
+                <input
+                  aria-label="Preview text scale"
+                  type="range"
+                  min="100"
+                  max="200"
+                  step="25"
+                  value={textScale}
+                  onChange={(event) => setTextScale(Number(event.target.value))}
+                  className="inspector-range w-full"
+                />
+              </InspectorControl>
+              <InspectorControl icon={<Gauge size={15} />} label="Motion">
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={reducedMotion}
+                  onClick={() => setReducedMotion((value) => !value)}
+                  className="flex w-full items-center justify-between rounded-lg bg-white/[.055] px-3 py-2.5 text-xs text-white/68"
                 >
-                  {(() => {
-                    const Icon = phases[index].icon
-                    return <Icon size={22} weight="regular" />
-                  })()}
-                  <span className="absolute -top-2 -right-2 grid size-5 place-items-center rounded-full bg-[var(--cream)] font-mono text-[9px] text-[var(--ink)]">
-                    {index + 1}
+                  <span>Reduce motion</span>
+                  <span
+                    className={`relative h-5 w-9 rounded-full transition-colors ${reducedMotion ? "bg-[var(--orange)]" : "bg-white/15"}`}
+                  >
+                    <span
+                      className={`absolute top-1 size-3 rounded-full bg-white transition-transform ${reducedMotion ? "translate-x-5" : "translate-x-1"}`}
+                    />
                   </span>
-                </div>
-                <div
-                  className={`md:absolute md:right-0 md:left-0 ${index % 2 === 0 ? "md:top-0 md:pb-12" : "md:bottom-0 md:pt-12"}`}
+                </button>
+              </InspectorControl>
+              <InspectorControl
+                icon={<WarningCircle size={15} />}
+                label="Product state"
+              >
+                <select
+                  aria-label="Preview product state"
+                  value={productState}
+                  onChange={(event) =>
+                    setProductState(event.target.value as InspectorState)
+                  }
+                  className="w-full rounded-lg bg-white/[.055] px-3 py-2.5 text-xs text-white/78 outline-none"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] tracking-[.12em] text-[var(--orange)] uppercase">
-                      {phases[index].phase}
+                  <option value="ready">Ready</option>
+                  <option value="error">Validation error</option>
+                  <option value="loading">Loading</option>
+                </select>
+              </InspectorControl>
+            </div>
+
+            <div className="relative grid min-h-[560px] place-items-center overflow-hidden bg-[#11120f] p-5 md:p-10">
+              <div className="inspector-glow absolute inset-0" aria-hidden />
+              <AnimatePresence mode="wait">
+                <m.div
+                  key={`${viewport}-${contrast}-${textScale}-${productState}`}
+                  initial={reducedMotion ? false : { opacity: 0, scale: 0.975 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={
+                    reducedMotion ? undefined : { opacity: 0, scale: 0.985 }
+                  }
+                  transition={{ duration: reducedMotion ? 0 : 0.3 }}
+                  className={`relative w-full overflow-hidden rounded-xl bg-[var(--paper)] text-[var(--ink)] shadow-2xl shadow-black/30 ${viewport === "mobile" ? "max-w-[330px]" : "max-w-[660px]"}`}
+                  style={{ fontSize: `${textScale}%` }}
+                >
+                  <div className="flex items-center justify-between bg-[var(--soft)] px-4 py-3">
+                    <span className="font-mono text-[.62em] text-[var(--muted)]">
+                      ELIGIBILITY CHECK
                     </span>
-                    <span className="font-mono text-[9px] text-white/40">
-                      {phases[index].signal}
+                    <span className="text-[.68em] text-[var(--orange)]">
+                      Step 2 of 3
                     </span>
                   </div>
-                  <h3 className="mt-5 max-w-sm text-xl leading-tight tracking-[-.03em] md:text-2xl">
-                    {step.t}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-white/60">
-                    {step.d}
-                  </p>
-                  <div className="mt-5 flex items-center gap-2 rounded-lg bg-white/[.045] px-3 py-2.5">
-                    <span className="size-1.5 rounded-full bg-[var(--orange)]" />
-                    <span className="font-mono text-[10px] text-white/68">
-                      Output · {phases[index].output}
-                    </span>
+                  <div
+                    className={`grid gap-6 p-6 ${viewport === "desktop" ? "md:grid-cols-[1fr_.7fr] md:p-8" : ""}`}
+                  >
+                    <div>
+                      <p className="text-[.7em] font-medium text-[var(--orange)]">
+                        Family information
+                      </p>
+                      <h3 className="mt-2 text-[1.45em] leading-tight tracking-[-.03em]">
+                        Where was your parent born?
+                      </h3>
+                      <p
+                        className={`mt-3 text-[.78em] leading-6 ${contrast === "AAA" ? "text-[#36342f]" : "text-[var(--body)]"}`}
+                      >
+                        This helps us understand which citizenship pathway may
+                        apply to you.
+                      </p>
+                      <label
+                        className="mt-6 block text-[.72em] font-medium"
+                        htmlFor="demo-country"
+                      >
+                        Country of birth
+                      </label>
+                      <select
+                        id="demo-country"
+                        aria-invalid={isError}
+                        aria-describedby={isError ? "demo-error" : "demo-help"}
+                        className={`mt-2 w-full rounded-lg bg-[var(--canvas)] px-3 py-3 text-[.78em] ring-2 outline-none ${isError ? "ring-red-600" : "ring-transparent focus:ring-[var(--orange)]"}`}
+                      >
+                        <option>Select a country</option>
+                        <option>Ethiopia</option>
+                      </select>
+                      {isError ? (
+                        <p
+                          id="demo-error"
+                          className="mt-2 flex items-center gap-1.5 text-[.68em] font-medium text-red-700"
+                        >
+                          <WarningCircle />
+                          Choose a country to continue.
+                        </p>
+                      ) : (
+                        <p
+                          id="demo-help"
+                          className="mt-2 text-[.65em] text-[var(--muted)]"
+                        >
+                          Use the country shown on the birth certificate.
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        disabled={isLoading}
+                        className="mt-6 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-[var(--orange)] px-4 py-3 text-[.75em] font-medium text-white disabled:opacity-70"
+                      >
+                        {isLoading ? (
+                          <>
+                            <span className="size-3 animate-spin rounded-full border-2 border-white/35 border-t-white" />
+                            Checking pathway…
+                          </>
+                        ) : (
+                          <>
+                            Continue <ArrowRight size={15} />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    {viewport === "desktop" && (
+                      <div className="rounded-lg bg-[var(--soft)] p-5">
+                        <p className="font-mono text-[.58em] text-[var(--muted)]">
+                          WHY WE ASK
+                        </p>
+                        <p className="mt-4 text-[.8em] leading-6">
+                          Citizenship rules can depend on a parent&apos;s
+                          birthplace and date of birth.
+                        </p>
+                        <div className="mt-6 space-y-3 text-[.68em] text-[var(--body)]">
+                          <p className="flex gap-2">
+                            <Check className="mt-0.5 text-[var(--orange)]" />
+                            Your answer is saved securely
+                          </p>
+                          <p className="flex gap-2">
+                            <Check className="mt-0.5 text-[var(--orange)]" />
+                            You can edit it later
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-                {index < APPROACH_STEPS.length - 1 && (
-                  <span className="absolute top-[54px] bottom-[-16px] left-[46px] w-px bg-[rgba(239,77,8,.3)] md:hidden" />
-                )}
-              </m.li>
-            ))}
-          </ol>
+                </m.div>
+              </AnimatePresence>
+            </div>
+
+            <aside
+              aria-label="Live quality checks"
+              className="bg-black/10 p-5 md:p-7"
+            >
+              <p className="font-mono text-[9px] tracking-[.12em] text-white/38 uppercase">
+                Live inspection
+              </p>
+              <div className="mt-6">
+                <p className="text-4xl tracking-[-.05em] text-white">{score}</p>
+                <p className="mt-1 text-xs text-white/42">
+                  Text contrast ratio
+                </p>
+              </div>
+              <dl className="mt-8 space-y-1">
+                {[
+                  ["Keyboard path", "Valid"],
+                  ["Touch target", "44px+"],
+                  ["Visible label", "Yes"],
+                  ["Error association", isError ? "Active" : "Ready"],
+                  ["Motion mode", reducedMotion ? "Reduced" : "Full"],
+                  ["Text zoom", `${textScale}%`],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="flex items-center justify-between rounded-lg bg-white/[.035] px-3 py-2.5 text-[11px]"
+                  >
+                    <dt className="text-white/42">{label}</dt>
+                    <dd className="flex items-center gap-1.5 text-white/78">
+                      <Check size={12} className="text-emerald-400" />
+                      {value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-7 text-xs leading-5 text-white/42">
+                This is not a static mockup. Every control changes the component
+                and its accessibility signals.
+              </p>
+            </aside>
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function InspectorControl({
+  icon,
+  label,
+  children,
+}: {
+  icon: React.ReactNode
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <div>
+      <div className="mb-2.5 flex items-center gap-2 text-[11px] text-white/48">
+        {icon}
+        <span>{label}</span>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+function SegmentedControl({
+  value,
+  options,
+  onChange,
+}: {
+  value: string
+  options: readonly { value: string; label: string; icon?: React.ReactNode }[]
+  onChange: (value: string) => void
+}) {
+  return (
+    <div className="grid grid-cols-2 gap-1 rounded-lg bg-black/20 p-1">
+      {options.map((option) => (
+        <button
+          type="button"
+          key={option.value}
+          aria-pressed={value === option.value}
+          onClick={() => onChange(option.value)}
+          className={`flex items-center justify-center gap-1.5 rounded-md px-2 py-2 text-[10px] transition-colors ${value === option.value ? "bg-[var(--orange)] text-white" : "text-white/45 hover:bg-white/[.05] hover:text-white"}`}
+        >
+          {option.icon && <span className="text-sm">{option.icon}</span>}
+          {option.label}
+        </button>
+      ))}
+    </div>
   )
 }
 
@@ -851,6 +1087,96 @@ function Stack() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FieldNotes() {
+  const [filter, setFilter] = useState("All")
+  const visibleNotes =
+    filter === "All"
+      ? FIELD_NOTES
+      : FIELD_NOTES.filter((note) => note.type === filter)
+
+  return (
+    <section id="notes" className="section-pad bg-[var(--paper)]">
+      <div className="shell">
+        <div className="grid gap-10 lg:grid-cols-[.62fr_1.38fr]">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="font-mono text-xs text-[var(--orange)]">
+              FIELD NOTES
+            </p>
+            <h2 className="mt-7 max-w-md text-[clamp(2.8rem,5vw,5.5rem)] leading-[.94] tracking-[-.04em]">
+              Currently on my desk.
+            </h2>
+            <p className="mt-6 max-w-md leading-7 text-[var(--body)]">
+              A living record of what I&apos;m building, learning, questioning,
+              and improving. This is not a polished after-the-fact blog.
+            </p>
+            <div
+              className="mt-8 flex flex-wrap gap-2"
+              aria-label="Filter field notes"
+            >
+              {NOTE_FILTERS.map((item) => (
+                <button
+                  type="button"
+                  key={item}
+                  aria-pressed={filter === item}
+                  onClick={() => setFilter(item)}
+                  className={`rounded-full px-4 py-2 text-xs transition-colors ${filter === item ? "bg-[var(--ink)] text-white" : "bg-[var(--soft)] text-[var(--body)] hover:text-[var(--ink)]"}`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="min-h-[570px]">
+            <AnimatePresence mode="popLayout">
+              {visibleNotes.map((note) => (
+                <m.article
+                  layout
+                  key={note.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.28 }}
+                  className="group grid gap-5 py-7 first:pt-0 md:grid-cols-[110px_1fr_auto] md:items-start"
+                >
+                  <div>
+                    <span className="font-mono text-[10px] text-[var(--orange)]">
+                      {note.date}
+                    </span>
+                    <p className="mt-2 text-xs text-[var(--muted)]">
+                      {note.type}
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="max-w-2xl text-2xl leading-tight tracking-[-.03em] transition-colors group-hover:text-[var(--orange)] md:text-3xl">
+                      {note.title}
+                    </h3>
+                    <p className="mt-4 max-w-2xl leading-7 text-[var(--body)]">
+                      {note.summary}
+                    </p>
+                    <div className="mt-5 flex gap-2">
+                      {note.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-[var(--soft)] px-3 py-1.5 font-mono text-[9px] text-[var(--muted)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <span className="grid size-10 place-items-center rounded-lg bg-[var(--soft)] text-[var(--muted)] transition-[color,transform] group-hover:-translate-y-1 group-hover:bg-[var(--orange)] group-hover:text-white">
+                    <ArrowUpRight size={17} />
+                  </span>
+                </m.article>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -1002,13 +1328,30 @@ function Footer() {
             </a>
           </div>
           <div className="flex flex-col justify-between gap-12 lg:items-end">
-            <div className="inline-flex items-center gap-3 rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.035)] px-4 py-2 text-xs text-white/65">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
+            <a
+              href={`mailto:${PROFILE.email}`}
+              className="group inline-grid min-w-[290px] grid-cols-[auto_1fr_auto] items-center gap-3 rounded-xl bg-white/[.045] px-4 py-3 text-left transition-colors hover:bg-white/[.07]"
+            >
+              <span
+                className="relative grid size-8 place-items-center rounded-lg bg-[rgba(239,77,8,.12)]"
+                aria-hidden
+              >
+                <span className="size-2 rounded-full bg-[var(--orange)] shadow-[0_0_12px_rgba(239,77,8,.75)]" />
               </span>
-              Open to frontend product opportunities
-            </div>
+              <span>
+                <span className="block font-mono text-[9px] tracking-[.12em] text-white/35 uppercase">
+                  Availability
+                </span>
+                <span className="mt-0.5 block text-xs text-white/72">
+                  Open to product opportunities
+                </span>
+              </span>
+              <ArrowUpRight
+                size={15}
+                className="text-white/25 transition-[color,transform] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--orange)]"
+                aria-hidden
+              />
+            </a>
             <nav
               aria-label="Footer"
               className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/55 lg:justify-end"
@@ -1023,25 +1366,25 @@ function Footer() {
                 </a>
               ))}
             </nav>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-5">
               <a
                 href={PROFILE.github}
                 aria-label="GitHub"
-                className="grid size-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
+                className="inline-flex p-1 text-white/55 transition-[color,transform] hover:-translate-y-0.5 hover:text-[var(--orange)]"
               >
                 <BrandIcon icon={siGithub} className="size-[18px]" />
               </a>
               <a
                 href={PROFILE.linkedin}
                 aria-label="LinkedIn"
-                className="grid size-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
+                className="inline-flex p-1 text-white/55 transition-[color,transform] hover:-translate-y-0.5 hover:text-[var(--orange)]"
               >
                 <FaLinkedinIn size={18} />
               </a>
               <a
                 href={`mailto:${PROFILE.email}`}
                 aria-label="Email"
-                className="grid size-11 place-items-center rounded-full border border-[var(--night-line)] bg-[rgba(239,77,8,.025)] text-white/60 transition-colors hover:border-[rgba(239,77,8,.55)] hover:bg-[rgba(239,77,8,.08)] hover:text-white"
+                className="inline-flex p-1 text-white/55 transition-[color,transform] hover:-translate-y-0.5 hover:text-[var(--orange)]"
               >
                 <EnvelopeSimple size={18} />
               </a>
@@ -1086,8 +1429,9 @@ export function PortfolioPage({
         <PracticeStrip />
         <SelectedWork />
         <Capabilities />
-        <Approach />
+        <InterfaceInspector />
         <Stack />
+        <FieldNotes />
         <AboutContact />
       </main>
       <Footer />
