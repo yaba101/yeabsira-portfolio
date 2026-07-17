@@ -158,13 +158,17 @@ function Header() {
         </a>
         <nav
           aria-label="Primary"
-          className="hidden items-center gap-7 text-sm md:flex"
+          className={`hidden items-center gap-7 rounded-full px-5 py-2 text-sm transition-[background-color,color,box-shadow,backdrop-filter] md:flex ${
+            scrolled || open
+              ? "bg-black/[.04]"
+              : "bg-black/25 text-white shadow-[0_2px_14px_rgba(0,0,0,.12)] backdrop-blur-md"
+          }`}
         >
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="opacity-75 transition-opacity hover:opacity-100"
+              className="font-medium opacity-90 transition-opacity text-shadow-[0_1px_8px_rgba(0,0,0,.55)] hover:opacity-100"
             >
               {link.label}
             </a>
@@ -224,32 +228,32 @@ function CareerCard() {
       />
       <div className="relative grid grid-cols-2 gap-2">
         <div className="col-span-2 rounded-xl bg-[rgba(244,242,233,.075)] p-5">
-          <div className="flex items-center justify-between font-mono text-[10px] tracking-[.14em] text-white/45 uppercase">
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[.14em] text-white/70 uppercase">
             <span>Current chapter</span>
             <span className="h-2 w-2 rounded-full bg-[var(--orange)]" />
           </div>
           <p className="mt-8 text-2xl font-light tracking-[-.025em]">
             Frontend Product Engineer
           </p>
-          <p className="mt-2 text-sm text-white/48">
+          <p className="mt-2 text-sm text-white/72">
             Next.js · React · Product UI
           </p>
         </div>
         <div className="rounded-xl bg-[rgba(239,77,8,.13)] p-4">
-          <p className="font-mono text-[9px] tracking-wider text-white/40 uppercase">
+          <p className="font-mono text-[9px] tracking-wider text-white/68 uppercase">
             Experience
           </p>
           <p className="mt-5 text-3xl font-light">
             4<span className="text-[var(--orange)]">+</span>
           </p>
-          <p className="mt-1 text-xs text-white/42">years shipping UI</p>
+          <p className="mt-1 text-xs text-white/68">years shipping UI</p>
         </div>
         <div className="rounded-xl bg-[rgba(244,242,233,.06)] p-4">
-          <p className="font-mono text-[9px] tracking-wider text-white/40 uppercase">
+          <p className="font-mono text-[9px] tracking-wider text-white/68 uppercase">
             Based in
           </p>
           <p className="mt-5 text-lg">Addis Ababa</p>
-          <p className="mt-1 text-xs text-white/42">Ethiopia · Remote</p>
+          <p className="mt-1 text-xs text-white/68">Ethiopia · Remote</p>
         </div>
         <a
           href={PROFILE.github}
@@ -318,7 +322,7 @@ function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <p className="mb-7 font-mono text-xs tracking-[.16em] text-white/70 uppercase">
+            <p className="mb-7 inline-flex rounded-md bg-black/30 px-3 py-2 font-mono text-xs font-medium tracking-[.14em] text-white/95 uppercase shadow-[0_2px_12px_rgba(0,0,0,.14)] backdrop-blur-sm">
               Frontend Product Engineer · Next.js
             </p>
             <h1 className="hero-title display max-w-4xl text-[clamp(3.5rem,7.8vw,6rem)] font-normal text-white">
@@ -348,7 +352,7 @@ function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
               </a>
             </div>
           </m.div>
-          <div className="flex flex-col items-end gap-4">
+          <div className="flex flex-col items-end gap-4 lg:-translate-y-12 xl:-translate-y-16">
             <button
               type="button"
               onClick={toggle}
