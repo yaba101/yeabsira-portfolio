@@ -18,9 +18,24 @@ export const metadata: Metadata = {
   description:
     "Frontend product engineer in Addis Ababa building responsive product experiences with Next.js, React, and TypeScript.",
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      {
+        url: "/brand/yeabsira-ram-flame-favicon.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/brand/yeabsira-ram-flame-favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/brand/yeabsira-ram-flame-favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/brand/yeabsira-ram-flame-favicon-32x32.png",
+    apple: "/brand/yeabsira-ram-flame-apple-touch-icon.png",
   },
   openGraph: {
     type: "website",

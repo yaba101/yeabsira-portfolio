@@ -141,20 +141,32 @@ function Header() {
         <a
           href="#top"
           aria-label={`${PROFILE.name}, back to top`}
-          className="group flex items-center gap-3"
+          className="group flex items-center"
         >
-          <span className="relative grid size-10 place-items-center overflow-hidden rounded-xl bg-[var(--ink)] text-[11px] font-semibold tracking-[-.03em] text-[var(--cream)] shadow-[0_4px_14px_rgba(0,0,0,.14)] transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3">
-            YM
-            <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-[var(--orange)]" />
-          </span>
-          <span className="hidden leading-none sm:block">
-            <span className="block text-sm font-semibold tracking-[-.02em]">
-              Yeabsira
-            </span>
-            <span className="mt-1 block font-mono text-[8px] tracking-[.12em] uppercase opacity-55">
-              Product engineer
-            </span>
-          </span>
+          <Image
+            src={
+              scrolled || open
+                ? "/brand/yeabsira-ram-flame-mark.svg"
+                : "/brand/yeabsira-ram-flame-mark-light.svg"
+            }
+            alt=""
+            width={200}
+            height={220}
+            priority
+            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-2 sm:hidden"
+          />
+          <Image
+            src={
+              scrolled || open
+                ? "/brand/yeabsira-ram-flame-logo.svg"
+                : "/brand/yeabsira-ram-flame-logo-light.svg"
+            }
+            alt=""
+            width={505}
+            height={110}
+            priority
+            className="hidden h-12 w-auto transition-transform duration-300 group-hover:translate-x-0.5 sm:block"
+          />
         </a>
         <nav
           aria-label="Primary"
@@ -239,7 +251,7 @@ function CareerCard() {
             Next.js · React · Product UI
           </p>
         </div>
-        <div className="rounded-xl bg-[rgba(239,77,8,.13)] p-4">
+        <div className="rounded-xl bg-[rgba(255,90,20,.13)] p-4">
           <p className="font-mono text-[9px] tracking-wider text-white/68 uppercase">
             Experience
           </p>
@@ -346,7 +358,7 @@ function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
               </a>
               <a
                 href="#contact"
-                className="rounded-full border border-[rgba(239,77,8,.42)] bg-black/15 px-6 py-3 text-sm backdrop-blur-sm transition-colors hover:bg-black/30"
+                className="rounded-full border border-[rgba(255,90,20,.42)] bg-black/15 px-6 py-3 text-sm backdrop-blur-sm transition-colors hover:bg-black/30"
               >
                 Get in touch
               </a>
@@ -359,7 +371,7 @@ function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
               role="switch"
               aria-checked={night}
               aria-label={`Background lighting: ${night ? "night" : "day"}. Switch to ${night ? "day" : "night"}.`}
-              className="flex items-center gap-3 rounded-full border border-[rgba(239,77,8,.35)] bg-black/35 p-1.5 pr-4 text-xs backdrop-blur-md"
+              className="flex items-center gap-3 rounded-full border border-[rgba(255,90,20,.35)] bg-black/35 p-1.5 pr-4 text-xs backdrop-blur-md"
             >
               <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-black">
                 {night ? <Moon size={17} /> : <Sun size={17} />}
@@ -922,14 +934,14 @@ function Stack() {
                 <div
                   key={icon.slug}
                   title={icon.title}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(244,242,233,.06)] text-white/55 transition-colors hover:bg-[rgba(239,77,8,.12)] hover:text-[var(--orange)]"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(244,242,233,.06)] text-white/55 transition-colors hover:bg-[rgba(255,90,20,.12)] hover:text-[var(--orange)]"
                 >
                   <BrandIcon icon={icon} className="h-[18px] w-[18px]" />
                 </div>
               ))}
             </div>
           </div>
-          <div className="overflow-hidden rounded-xl bg-[rgba(239,77,8,.045)] p-2">
+          <div className="overflow-hidden rounded-xl bg-[rgba(255,90,20,.045)] p-2">
             <div className="flex items-center gap-2 px-4 py-3">
               <i className="h-2.5 w-2.5 rounded-full bg-red-400" />
               <i className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
@@ -1206,10 +1218,10 @@ function Footer() {
               className="group inline-grid min-w-[290px] grid-cols-[auto_1fr_auto] items-center gap-3 rounded-xl bg-white/[.045] px-4 py-3 text-left transition-colors hover:bg-white/[.07]"
             >
               <span
-                className="relative grid size-8 place-items-center rounded-lg bg-[rgba(239,77,8,.12)]"
+                className="relative grid size-8 place-items-center rounded-lg bg-[rgba(255,90,20,.12)]"
                 aria-hidden
               >
-                <span className="size-2 rounded-full bg-[var(--orange)] shadow-[0_0_12px_rgba(239,77,8,.75)]" />
+                <span className="size-2 rounded-full bg-[var(--orange)] shadow-[0_0_12px_rgba(255,90,20,.75)]" />
               </span>
               <span>
                 <span className="block font-mono text-[9px] tracking-[.12em] text-white/35 uppercase">

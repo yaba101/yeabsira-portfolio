@@ -21,10 +21,10 @@
   --body: #55524c;
   --muted: #767269;
   --line: #c8b8aa;
-  --orange: #ef4d08;
+  --orange: #ff5a14;
   --night: #11120f;
   --night-soft: #181713;
-  --night-line: rgba(239, 77, 8, 0.2);
+  --night-line: rgba(255, 90, 20, 0.2);
   --night-line-soft: rgba(244, 242, 233, 0.09);
   --cream: #f4f2e9;
   --background: var(--canvas);
@@ -102,7 +102,7 @@ a {
   position: relative;
   border-radius: 12px;
   background: rgba(12, 12, 10, 0.34);
-  box-shadow: inset 0 1px 0 rgba(239, 77, 8, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 90, 20, 0.18);
   backdrop-filter: blur(10px);
 }
 
@@ -113,7 +113,7 @@ a {
   bottom: calc(100% - 4px);
   left: 2%;
   height: 18px;
-  border-top: 1px solid rgba(239, 77, 8, 0.42);
+  border-top: 1px solid rgba(255, 90, 20, 0.42);
   border-radius: 50%;
   transform: rotate(-0.35deg);
   pointer-events: none;
@@ -134,8 +134,8 @@ a {
 .profile-orbit {
   background: radial-gradient(
     circle at 35% 35%,
-    rgba(239, 77, 8, 0.34),
-    rgba(239, 77, 8, 0.06) 48%,
+    rgba(255, 90, 20, 0.34),
+    rgba(255, 90, 20, 0.06) 48%,
     transparent 72%
   );
   filter: blur(4px);
@@ -145,7 +145,7 @@ a {
   border-color: var(--night-line);
   background: linear-gradient(
     145deg,
-    rgba(239, 77, 8, 0.045),
+    rgba(255, 90, 20, 0.045),
     rgba(244, 242, 233, 0.025)
   );
 }
@@ -159,7 +159,11 @@ a {
 }
 .inspector-glow {
   background:
-    radial-gradient(circle at 50% 42%, rgba(239, 77, 8, 0.14), transparent 42%),
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(255, 90, 20, 0.14),
+      transparent 42%
+    ),
     radial-gradient(
       circle at 20% 90%,
       rgba(244, 242, 233, 0.05),

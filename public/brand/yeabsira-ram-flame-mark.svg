@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" fill="none">
+  <title>Yeabsira Mekuria — Ram Flame</title>
+  <path d="M100 213V119C100 70 68 28 37 28 18 28 6 42 6 61c0 27 23 45 49 45 23 0 39-14 45-35" stroke="#171717" stroke-width="15" stroke-linecap="round"/>
+  <path d="M100 119C100 70 132 28 163 28c19 0 31 14 31 33 0 27-23 45-49 45-23 0-39-14-45-35" stroke="#FF5A14" stroke-width="15" stroke-linecap="round"/>
+  <path d="M100 119V181" stroke="#171717" stroke-width="15" stroke-linecap="round"/>
+</svg>

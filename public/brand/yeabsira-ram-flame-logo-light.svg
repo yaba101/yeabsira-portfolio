@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505 110" fill="none">
+  <title>Yeabsira Mekuria — Product Engineer</title>
+  <g transform="translate(8 4) scale(.42)">
+    <path d="M100 213V119C100 70 68 28 37 28 18 28 6 42 6 61c0 27 23 45 49 45 23 0 39-14 45-35" stroke="#F8F4ED" stroke-width="15" stroke-linecap="round"/>
+    <path d="M100 119C100 70 132 28 163 28c19 0 31 14 31 33 0 27-23 45-49 45-23 0-39-14-45-35" stroke="#FF5A14" stroke-width="15" stroke-linecap="round"/>
+    <path d="M100 119V181" stroke="#F8F4ED" stroke-width="15" stroke-linecap="round"/>
+  </g>
+  <text x="104" y="51" fill="#F8F4ED" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="31" font-weight="720" letter-spacing="-1.4">Yeabsira Mekuria</text>
+  <path d="M106 68H138" stroke="#FF5A14" stroke-width="3.5" stroke-linecap="round"/>
+  <text x="150" y="73" fill="#DED8CE" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3.2">PRODUCT ENGINEER</text>
+</svg>
