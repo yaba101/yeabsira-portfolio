@@ -25,11 +25,12 @@ import {
 } from "simple-icons"
 import {
   ArrowDown,
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   CloudSun,
   Check,
+  CaretLeft,
+  CaretRight,
   EnvelopeSimple,
   List,
   LinkedinLogo,
@@ -40,6 +41,7 @@ import {
 } from "@phosphor-icons/react"
 
 import { CAPABILITY_ICONS } from "@/lib/capability-icons"
+import { CommandPalette } from "@/components/command-palette"
 import {
   ABOUT_META,
   CAPABILITIES,
@@ -168,6 +170,7 @@ function Header() {
             </a>
           ))}
         </nav>
+        <CommandPalette />
         <a
           href="#contact"
           className="hidden rounded-full border border-current px-5 py-2 text-sm transition-transform active:scale-[.98] md:block"
@@ -499,33 +502,29 @@ function SelectedWork() {
                 </button>
               ))}
             </div>
-            <div className="rounded-lg bg-[var(--canvas)] p-3">
-              <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    aria-label="Previous project"
-                    onClick={() => {
-                      setFocusPaused(true)
-                      move(-1)
-                    }}
-                    className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
-                  >
-                    <ArrowLeft />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Next project"
-                    onClick={() => {
-                      setFocusPaused(true)
-                      move(1)
-                    }}
-                    className="grid h-12 w-12 place-items-center rounded-full border transition-colors hover:bg-[var(--ink)] hover:text-white"
-                  >
-                    <ArrowRight />
-                  </button>
-                </div>
-              </div>
+            <div className="flex justify-end gap-1">
+              <button
+                type="button"
+                aria-label="Previous project"
+                onClick={() => {
+                  setFocusPaused(true)
+                  move(-1)
+                }}
+                className="grid size-10 place-items-center text-[var(--muted)] transition-[color,transform] hover:-translate-x-0.5 hover:text-[var(--ink)]"
+              >
+                <CaretLeft size={22} weight="bold" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next project"
+                onClick={() => {
+                  setFocusPaused(true)
+                  move(1)
+                }}
+                className="grid size-10 place-items-center text-[var(--muted)] transition-[color,transform] hover:translate-x-0.5 hover:text-[var(--ink)]"
+              >
+                <CaretRight size={22} weight="bold" />
+              </button>
             </div>
           </div>
           <div
