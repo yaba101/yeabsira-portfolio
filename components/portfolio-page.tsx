@@ -335,7 +335,7 @@ function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
             transition={{ duration: 0.8 }}
           >
             <p className="mb-7 inline-flex rounded-md bg-black/30 px-3 py-2 font-mono text-xs font-medium tracking-[.14em] text-white/95 uppercase shadow-[0_2px_12px_rgba(0,0,0,.14)] backdrop-blur-sm">
-              Frontend Product Engineer · Next.js
+              Frontend Product Engineer · UI/UX Engineer
             </p>
             <h1 className="hero-title display max-w-4xl text-[clamp(3.5rem,7.8vw,6rem)] font-normal text-white">
               Product interfaces,
@@ -364,7 +364,7 @@ function Hero({ initialWeather }: { initialWeather: WeatherDisplay }) {
               </a>
             </div>
           </m.div>
-          <div className="flex flex-col items-end gap-4 lg:-translate-y-12 xl:-translate-y-16">
+          <div className="flex flex-col items-end gap-4 lg:self-start lg:pt-3">
             <button
               type="button"
               onClick={toggle}
