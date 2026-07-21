@@ -4,7 +4,7 @@
  * Centralized site copy.
  *
  * This file holds the repeating, list-shaped content rendered across the
- * portfolio — nav links, projects, capabilities, the stack, footer columns,
+ * portfolio — nav links, projects, the stack, footer columns,
  * and so on. One-off strings (headlines, section intros, CTA labels) stay
  * inline in their components; only data with a repeating pattern lives here so
  * it's easy to edit, translate, or hand off in one place.
@@ -134,7 +134,6 @@ export const PROFILE = {
 // components/site-header.tsx — primary + mobile nav.
 export const NAV_LINKS = [
   { label: "Work", href: "#work" },
-  { label: "Product craft", href: "#capabilities" },
   { label: "Stack", href: "#stack" },
   { label: "Build log", href: "#notes" },
 ] as const
@@ -231,60 +230,6 @@ export const PROJECTS: readonly Project[] = [
   },
 ]
 
-// --- Capabilities ---------------------------------------------------------
-// components/capabilities.tsx — the three practice cards. Cards map to the
-// icons in components/capability-icons.tsx by position.
-export const CAPABILITIES = [
-  {
-    num: "— 01",
-    title: "Build product interfaces",
-    body: "Responsive Next.js experiences connected to real product data.",
-    evidence:
-      "Evidence: client and expert portals, dashboards, onboarding, and eligibility flows at adavia.",
-    items: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "JavaScript",
-      "Zustand",
-      "nuqs",
-      "TanStack Query",
-      "REST APIs",
-    ],
-  },
-  {
-    num: "— 02",
-    title: "Simplify complex workflows",
-    body: "Dense requirements shaped into clear journeys and interaction systems.",
-    evidence:
-      "Evidence: React Flow family-tree UI and guided citizenship eligibility experiences.",
-    items: [
-      "UI/UX design",
-      "Figma delivery",
-      "React Flow",
-      "Dashboards",
-      "Forms",
-      "Responsive UI",
-    ],
-  },
-  {
-    num: "— 03",
-    title: "Improve production quality",
-    body: "Interfaces refined through testing, analytics, observability, and responsive QA.",
-    evidence:
-      "Evidence: Playwright coverage, PostHog insights, Sentry monitoring, and reusable UI patterns.",
-    items: [
-      "Design systems",
-      "Tailwind CSS",
-      "PostHog",
-      "Sentry",
-      "Playwright",
-      "Performance",
-      "Accessibility",
-    ],
-  },
-] as const
-
 // --- Approach -------------------------------------------------------------
 // components/approach.tsx — the four ordered process steps.
 export const APPROACH_STEPS = [
@@ -312,39 +257,39 @@ export const APPROACH_STEPS = [
 
 export const FIELD_NOTES = [
   {
-    type: "Exploring",
-    title: "How technical products earn their first customers",
+    type: "Building",
+    title: "Breakscope, a responsive testing workbench",
     summary:
-      "Learning the practical GTM work behind a product: a narrow audience, a real problem, a useful first conversation, and a repeatable signal.",
+      "A local-first tool that finds the exact widths where an interface breaks, then keeps real browser evidence in one review workspace.",
     date: "Now",
-    tags: ["GTM", "Product strategy", "Discovery"],
+    tags: ["Next.js", "Playwright", "Responsive QA"],
     detail: {
-      question: "How does a technical product find its first repeatable signal?",
+      question: "How can responsive QA become more precise, visual, and useful?",
       learning:
-        "I’m studying how strong product teams choose a specific customer, listen for the language they use to describe the problem, and turn that into a clear product story before scaling distribution.",
-      why: "As a product engineer, I want to understand the decisions before the interface: who the work is for, what makes it urgent, and how a feature earns its place.",
+        "Breakscope discovers routes, sweeps through the responsive range between familiar devices, captures real browser renders, and groups related failures into one review surface.",
+      why: "Responsive bugs are often found too late or reduced to vague screenshots. I’m building a workflow that makes the exact failing width and the surrounding evidence easy to inspect.",
       prompts: [
-        "Who feels this problem most often?",
-        "What is the smallest useful promise?",
-        "Which conversations are worth repeating?",
+        "Where does the interface first begin to fail?",
+        "What evidence makes a bug actionable?",
+        "How can a fix be verified across browsers?",
       ],
     },
   },
   {
     type: "Exploring",
-    title: "What a Forward Deployed Engineer brings to the team",
+    title: "GTM and FDE: learning closer to the customer",
     summary:
-      "Learning how FDEs work close to customers, translate ambiguous workflows into reliable software, and bring those lessons back into the product.",
+      "Exploring how technical products earn early trust, and how Forward Deployed Engineers turn real customer workflows into stronger product systems.",
     date: "This week",
-    tags: ["FDE", "Systems thinking", "Customer context"],
+    tags: ["GTM", "FDE", "Product strategy"],
     detail: {
-      question: "How can engineering become closer to the real work a customer is trying to do?",
+      question: "How can product engineering stay close to the problem, not just the brief?",
       learning:
-        "I’m looking at the FDE model as a mix of discovery, systems design, and delivery. The interesting part is not simply shipping quickly; it is learning enough context to build the right thing and leaving the product stronger for the next customer.",
-      why: "It connects the parts of product work I care about most: difficult workflows, practical constraints, clear interfaces, and direct feedback from the people using them.",
+        "I’m studying GTM through the lens of early customer conversations, narrow promises, and repeatable signals. Alongside it, I’m learning the FDE model: discovering context with customers, translating ambiguous workflows into software, and feeding those lessons back into the core product.",
+      why: "Together, they connect the parts of product work I care about most: difficult workflows, practical constraints, clear interfaces, and direct feedback from the people using them.",
       prompts: [
+        "Who feels this problem most often?",
         "What context is missing from the brief?",
-        "What should be solved in the product, not manually?",
         "How does one customer lesson become a reusable system?",
       ],
     },
@@ -416,7 +361,6 @@ export const FOOTER_COLUMNS = [
     title: "Site",
     links: [
       ["Work", "#work"],
-      ["Product craft", "#capabilities"],
       ["Build log", "#notes"],
       ["Approach", "#process"],
       ["Stack", "#stack"],

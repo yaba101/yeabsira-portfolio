@@ -43,11 +43,9 @@ import {
   X,
 } from "@phosphor-icons/react"
 
-import { CAPABILITY_ICONS } from "@/lib/capability-icons"
 import { CommandPalette } from "@/components/command-palette"
 import {
   ABOUT_META,
-  CAPABILITIES,
   FIELD_NOTES,
   NAV_LINKS,
   PRACTICE_AREAS,
@@ -90,12 +88,6 @@ const TOOL_ICONS = [
   siSentry,
   siPrisma,
   siDrizzle,
-] as const
-
-const CAPABILITY_BRANDS = [
-  [siNextdotjs, siReact, siTypescript],
-  [siFigma, siReact, siD3],
-  [siPosthog, siSentry, siTypescript],
 ] as const
 
 function SectionHeading({
@@ -617,76 +609,6 @@ function SelectedWork() {
   )
 }
 
-function Capabilities() {
-  return (
-    <section id="capabilities" className="section-pad bg-[var(--paper)]">
-      <div className="shell">
-        <SectionHeading number="02" label="Product craft" aside="How I build">
-          Frontend engineering that connects product intent, interface craft,
-          and dependable delivery.
-        </SectionHeading>
-        <div className="space-y-3">
-          {CAPABILITIES.map((capability, index) => {
-            const Icon = CAPABILITY_ICONS[index]
-            return (
-              <article
-                key={capability.title}
-                className="grid gap-8 rounded-xl bg-[var(--canvas)] p-6 md:grid-cols-[90px_1fr_1.05fr] md:items-center md:p-8"
-              >
-                <div className="flex items-center justify-between md:block">
-                  <span className="font-mono text-xs text-[var(--orange)]">
-                    0{index + 1}
-                  </span>
-                  <div className="mt-0 size-11 text-[var(--orange)] md:mt-8">
-                    <Icon />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-2xl tracking-[-.03em] md:text-3xl">
-                    {capability.title}
-                  </h3>
-                  <p className="mt-3 max-w-lg leading-6 text-[var(--body)]">
-                    {capability.body}
-                  </p>
-                  <div className="mt-5 flex gap-2">
-                    {CAPABILITY_BRANDS[index].map((icon) => (
-                      <span
-                        key={icon.slug}
-                        title={icon.title}
-                        className="grid size-9 place-items-center rounded-lg bg-[var(--soft)] text-[var(--muted)]"
-                      >
-                        <BrandIcon icon={icon} className="size-4" />
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="rounded-xl bg-[var(--soft)] p-5">
-                  <p className="font-mono text-[9px] tracking-[.12em] text-[var(--orange)] uppercase">
-                    Project evidence
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-[var(--body)]">
-                    {capability.evidence}
-                  </p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {capability.items.slice(0, 4).map((item) => (
-                      <li
-                        key={item}
-                        className="rounded-full bg-[var(--paper)] px-3 py-1.5 text-[10px] text-[var(--muted)]"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            )
-          })}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 type InspectorContrast = "original" | "AA" | "AAA"
 
 export function InterfaceInspector() {
@@ -1005,9 +927,9 @@ function FieldNotes() {
               public.
             </h2>
             <p className="mt-7 max-w-sm leading-7 text-[var(--body)]">
-              Two product directions I&apos;m actively studying. I haven&apos;t chosen
-              one to pursue yet, but both are sharpening how I think about
-              useful software.
+              A product I&apos;m building, plus a product direction I&apos;m studying.
+              Both are sharpening how I think about useful, production-ready
+              software.
             </p>
             <p className="mt-9 font-mono text-[10px] tracking-[.12em] text-[var(--muted)]">
               SELECT AN ENTRY TO EXPAND
@@ -1024,7 +946,7 @@ function FieldNotes() {
                 </p>
               </div>
               <span className="font-mono text-[10px] tracking-[.12em] text-white/45">
-                {String(FIELD_NOTES.length).padStart(2, "0")} DIRECTIONS
+                {String(FIELD_NOTES.length).padStart(2, "0")} ENTRIES
               </span>
             </div>
             <AnimatePresence mode="popLayout">
@@ -1376,7 +1298,6 @@ export function PortfolioPage({
           <Hero initialWeather={initialWeather} />
           <PracticeStrip />
           <SelectedWork />
-          <Capabilities />
           <Stack />
           <FieldNotes />
           <AboutContact />
