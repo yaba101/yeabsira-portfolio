@@ -83,10 +83,12 @@ pnpm dev
 ## Deploy to Cloudflare Workers
 
 The repository includes an explicit OpenNext and Wrangler configuration for the
-`yeabsira-portfolio` Worker. In Cloudflare Workers Builds, use:
+`yeabsira-portfolio` Worker. The standard build command generates the complete
+OpenNext Worker bundle before Wrangler deploys it. In Cloudflare Workers Builds,
+use:
 
-- Build command: leave empty
-- Deploy command: `pnpm deploy`
+- Build command: `pnpm build`
+- Deploy command: `npx wrangler deploy`
 - Production branch: `main`
 
 To verify the Workers runtime locally before deploying:
