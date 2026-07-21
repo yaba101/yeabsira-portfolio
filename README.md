@@ -80,6 +80,21 @@ pnpm dev
 
 > ℹ️ **Requirements:** Node.js 20.9+ and pnpm. No API keys or `.env` file are needed—the weather and location features use free, keyless services.
 
+## Deploy to Cloudflare Workers
+
+The repository includes an explicit OpenNext and Wrangler configuration for the
+`yeabsira-portfolio` Worker. In Cloudflare Workers Builds, use:
+
+- Build command: leave empty
+- Deploy command: `pnpm deploy`
+- Production branch: `main`
+
+To verify the Workers runtime locally before deploying:
+
+```bash
+pnpm preview
+```
+
 
 ## ⭐ Found this useful?
 
