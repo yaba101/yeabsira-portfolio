@@ -263,6 +263,9 @@ export const FIELD_NOTES = [
       "A local-first tool that finds the exact widths where an interface breaks, then keeps real browser evidence in one review workspace.",
     date: "Now",
     tags: ["Next.js", "Playwright", "Responsive QA"],
+    href: "https://github.com/yaba101/breakscope",
+    visual: null,
+    visualAlt: "",
     detail: {
       question: "How can responsive QA become more precise, visual, and useful?",
       learning:
@@ -282,6 +285,10 @@ export const FIELD_NOTES = [
       "Exploring how technical products earn early trust, and how Forward Deployed Engineers turn real customer workflows into stronger product systems.",
     date: "This week",
     tags: ["GTM", "FDE", "Product strategy"],
+    href: null,
+    visual: "/assets/build-log/gtm-fde-learning-map.png",
+    visualAlt:
+      "Canvas-style diagram showing customer conversations, insight synthesis, product delivery, and feedback loops.",
     detail: {
       question: "How can product engineering stay close to the problem, not just the brief?",
       learning:

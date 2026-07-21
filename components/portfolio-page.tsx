@@ -908,6 +908,13 @@ function Stack() {
 function FieldNotes() {
   const [selectedNote, setSelectedNote] = useState<(typeof FIELD_NOTES)[number] | null>(null)
   const reduceMotion = useReducedMotion()
+  const openNote = (note: (typeof FIELD_NOTES)[number]) => {
+    if (note.href) {
+      window.open(note.href, "_blank", "noopener,noreferrer")
+      return
+    }
+    setSelectedNote(note)
+  }
 
   return (
     <section id="notes" className="section-pad bg-[var(--paper)]">
@@ -951,14 +958,16 @@ function FieldNotes() {
             </div>
             <AnimatePresence mode="popLayout">
               {FIELD_NOTES.map((note, index) => (
-                <m.article
+                <m.button
+                  type="button"
                   layout
                   key={note.title}
+                  onClick={() => openNote(note)}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.28 }}
-                  className="group grid gap-5 border-b border-white/10 py-8 last:border-0 md:grid-cols-[116px_minmax(0,1fr)_48px] md:items-center md:gap-8 md:py-10"
+                  className="group grid w-full cursor-pointer gap-5 border-b border-white/10 py-8 text-left last:border-0 md:grid-cols-[116px_minmax(0,1fr)_48px] md:items-center md:gap-8 md:py-10"
                 >
                   <div className="flex items-start gap-3 md:block">
                     <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/25 font-mono text-[10px] text-[var(--orange)]">
@@ -971,12 +980,7 @@ function FieldNotes() {
                       <p className="mt-1 text-xs text-white/65">{note.type}</p>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedNote(note)}
-                    className="block w-full cursor-pointer text-left"
-                    aria-label={`Read more about ${note.title}`}
-                  >
+                  <div>
                     <h3 className="max-w-3xl text-[clamp(1.65rem,2.4vw,2.45rem)] leading-[1.04] tracking-[-.035em] text-balance transition-colors group-hover:text-[var(--orange)]">
                       {note.title}
                     </h3>
@@ -993,16 +997,11 @@ function FieldNotes() {
                         </span>
                       ))}
                     </div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedNote(note)}
-                    aria-label={`Read more about ${note.title}`}
-                    className="grid size-11 place-items-center self-end rounded-full bg-white text-[var(--night)] transition-[color,transform,background-color] hover:-translate-y-1 hover:bg-[var(--orange)] hover:text-white focus-visible:outline-white md:self-center"
-                  >
+                  </div>
+                  <span className="grid size-11 place-items-center self-end rounded-full bg-white text-[var(--night)] transition-[color,transform,background-color] group-hover:-translate-y-1 group-hover:bg-[var(--orange)] group-hover:text-white md:self-center">
                     <ArrowUpRight size={18} />
-                  </button>
-                </m.article>
+                  </span>
+                </m.button>
               ))}
             </AnimatePresence>
           </div>
@@ -1019,18 +1018,41 @@ function FieldNotes() {
               initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
-              className="fixed top-1/2 left-1/2 z-[81] w-[min(680px,calc(100%-32px))] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-[var(--night)] p-6 text-[var(--cream)] shadow-[0_18px_55px_rgba(0,0,0,.42)] sm:p-9"
+              className="fixed top-1/2 left-1/2 z-[81] max-h-[calc(100vh-32px)] w-[min(960px,calc(100%-32px))] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-[var(--night)] p-6 text-[var(--cream)] shadow-[0_18px_55px_rgba(0,0,0,.42)] sm:p-9"
             >
-              <Dialog.Title className="max-w-xl text-[clamp(2rem,4vw,3.4rem)] leading-[.98] tracking-[-.04em] text-balance">
+              <div className="flex items-center justify-between gap-6">
+                <p className="font-mono text-[10px] tracking-[.14em] text-[var(--orange)]">LEARNING NOTE / 02</p>
+                <Dialog.Close aria-label="Close note" className="grid size-9 cursor-pointer place-items-center rounded-full bg-white/8 text-white/65 transition-colors hover:bg-white hover:text-[var(--night)]">
+                  <X size={16} />
+                </Dialog.Close>
+              </div>
+              <Dialog.Title className="mt-7 max-w-3xl text-[clamp(2rem,4vw,3.7rem)] leading-[.98] tracking-[-.04em] text-balance">
                 {selectedNote?.title}
               </Dialog.Title>
               <Dialog.Description className="sr-only">
                 Details about what Yeabsira is learning.
               </Dialog.Description>
-              <p className="mt-6 font-mono text-[10px] tracking-[.12em] text-[var(--orange)]">
+              <p className="mt-5 max-w-2xl font-mono text-[10px] leading-5 tracking-[.1em] text-[var(--orange)]">
                 {selectedNote?.detail.question}
               </p>
-              <div className="mt-8 grid gap-7 sm:grid-cols-2">
+              {selectedNote?.visual && (
+                <div className="mt-8 overflow-hidden rounded-xl bg-[#171815]">
+                  <Image
+                    src={selectedNote.visual}
+                    alt={selectedNote.visualAlt}
+                    width={1792}
+                    height={1024}
+                    className="aspect-[16/9] w-full object-cover"
+                  />
+                  <div className="grid gap-2 px-5 py-4 text-center font-mono text-[9px] tracking-[.1em] text-white/50 sm:grid-cols-4">
+                    <span>CUSTOMER CONTEXT</span>
+                    <span>GTM SIGNAL</span>
+                    <span>FDE DELIVERY</span>
+                    <span>PRODUCT LEARNING</span>
+                  </div>
+                </div>
+              )}
+              <div className="mt-8 grid gap-7 border-t border-white/10 pt-7 sm:grid-cols-2">
                 <div>
                   <p className="font-mono text-[10px] tracking-[.12em] text-white/45">WHAT I&apos;M LEARNING</p>
                   <p className="mt-3 text-[15px] leading-7 text-white/80">{selectedNote?.detail.learning}</p>
@@ -1048,10 +1070,7 @@ function FieldNotes() {
                   ))}
                 </ul>
               </div>
-              <Dialog.Close className="mt-9 inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-[var(--night)] transition-colors hover:bg-[var(--orange)] hover:text-white">
-                Close note
-                <X size={15} />
-              </Dialog.Close>
+              <p className="mt-8 font-mono text-[9px] tracking-[.12em] text-white/35">ESC TO CLOSE</p>
             </m.div>
           </Dialog.Content>
         </Dialog.Portal>
