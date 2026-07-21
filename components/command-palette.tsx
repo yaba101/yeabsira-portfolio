@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react"
 import {
   ArrowSquareOut,
+  CommandIcon,
   Copy,
   EnvelopeSimple,
   FileText,
   FolderOpen,
   GithubLogo,
   LinkedinLogo,
-  ListMagnifyingGlass,
   Note,
   TerminalWindow,
 } from "@phosphor-icons/react"
@@ -47,10 +47,19 @@ export function CommandPalette() {
     setOpen(false)
     window.setTimeout(action, 0)
   }
-  const go = (href: string) =>
+  const go = (href: string) => {
+    const isExternal = /^https?:\/\//.test(href)
+
+    if (isExternal) {
+      window.open(href, "_blank", "noopener,noreferrer")
+      setOpen(false)
+      return
+    }
+
     run(() => {
       window.location.href = href
     })
+  }
   const copyEmail = () =>
     run(async () => {
       try {
@@ -71,10 +80,12 @@ export function CommandPalette() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open command palette"
-        className="inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs opacity-70 transition-[background-color,opacity] hover:bg-current/5 hover:opacity-100"
+        className="group inline-flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs opacity-75 transition-[background-color,opacity] hover:bg-current/8 hover:opacity-100"
       >
-        <ListMagnifyingGlass size={17} />
-        <Kbd className="hidden bg-current/10 text-[10px] text-current sm:inline-flex">
+        <span className="grid size-7 place-items-center rounded-md border border-current/20 bg-current/5 transition-transform group-hover:-rotate-6 group-hover:scale-105">
+          <CommandIcon size={16} weight="bold" />
+        </span>
+        <Kbd className="hidden border-0 bg-current/8 text-[10px] text-current sm:inline-flex">
           ⌘K
         </Kbd>
       </button>
@@ -82,7 +93,7 @@ export function CommandPalette() {
         <Command loop label="Portfolio commands">
           <CommandInput
             autoFocus
-            placeholder="Search projects, notes, or actions…"
+            placeholder="Search work, build logs, or actions…"
           />
           <CommandList>
             <CommandEmpty>No matching command found.</CommandEmpty>
@@ -93,7 +104,10 @@ export function CommandPalette() {
                   value={`navigate ${link.label}`}
                   onSelect={() => go(link.href)}
                 >
-                  <TerminalWindow size={17} className="text-[var(--orange)]" />
+                  <TerminalWindow
+                    size={17}
+                    className="text-[var(--orange)] group-data-[selected=true]:text-white"
+                  />
                   <span>{link.label}</span>
                   <CommandShortcut>{link.href}</CommandShortcut>
                 </CommandItem>
@@ -102,7 +116,10 @@ export function CommandPalette() {
                 value="navigate about profile experience"
                 onSelect={() => go("#about")}
               >
-                <TerminalWindow size={17} className="text-[var(--orange)]" />
+                <TerminalWindow
+                  size={17}
+                  className="text-[var(--orange)] group-data-[selected=true]:text-white"
+                />
                 <span>About & experience</span>
                 <CommandShortcut>#about</CommandShortcut>
               </CommandItem>
@@ -110,7 +127,10 @@ export function CommandPalette() {
                 value="navigate contact email talk"
                 onSelect={() => go("#contact")}
               >
-                <EnvelopeSimple size={17} className="text-[var(--orange)]" />
+                <EnvelopeSimple
+                  size={17}
+                  className="text-[var(--orange)] group-data-[selected=true]:text-white"
+                />
                 <span>Contact</span>
                 <CommandShortcut>#contact</CommandShortcut>
               </CommandItem>
@@ -132,7 +152,7 @@ export function CommandPalette() {
               ))}
             </CommandGroup>
             <CommandSeparator />
-            <CommandGroup heading="Field notes">
+            <CommandGroup heading="Build log">
               {FIELD_NOTES.map((note) => (
                 <CommandItem
                   key={note.title}
@@ -193,7 +213,7 @@ export function CommandPalette() {
           </CommandList>
           <div
             aria-live="polite"
-            className="flex items-center justify-between border-t border-[var(--line)] px-4 py-3 font-mono text-[9px] text-[var(--muted)]"
+            className="flex items-center justify-between px-5 py-3 font-mono text-[9px] text-white/45"
           >
             <span>{message}</span>
             <span>Esc to close</span>

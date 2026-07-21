@@ -9,6 +9,7 @@ import {
   m,
   useReducedMotion,
 } from "motion/react"
+import { Dialog } from "radix-ui"
 import {
   siFigma,
   siD3,
@@ -16,9 +17,11 @@ import {
   siJavascript,
   siNextdotjs,
   siPosthog,
+  siPrisma,
   siReact,
   siResend,
   siSentry,
+  siDrizzle,
   siTailwindcss,
   siTypescript,
   type SimpleIcon,
@@ -85,6 +88,8 @@ const TOOL_ICONS = [
   siResend,
   siPosthog,
   siSentry,
+  siPrisma,
+  siDrizzle,
 ] as const
 
 const CAPABILITY_BRANDS = [
@@ -616,7 +621,7 @@ function Capabilities() {
   return (
     <section id="capabilities" className="section-pad bg-[var(--paper)]">
       <div className="shell">
-        <SectionHeading number="02" label="Capabilities" aside="What I bring">
+        <SectionHeading number="02" label="Product craft" aside="How I build">
           Frontend engineering that connects product intent, interface craft,
           and dependable delivery.
         </SectionHeading>
@@ -683,7 +688,6 @@ function Capabilities() {
 }
 
 type InspectorContrast = "original" | "AA" | "AAA"
-const NOTE_FILTERS = ["All", "Building", "Learning", "Decision"] as const
 
 export function InterfaceInspector() {
   const [contrast, setContrast] = useState<InspectorContrast>("AA")
@@ -980,47 +984,51 @@ function Stack() {
 }
 
 function FieldNotes() {
-  const [filter, setFilter] = useState("All")
-  const visibleNotes =
-    filter === "All"
-      ? FIELD_NOTES
-      : FIELD_NOTES.filter((note) => note.type === filter)
+  const [selectedNote, setSelectedNote] = useState<(typeof FIELD_NOTES)[number] | null>(null)
+  const reduceMotion = useReducedMotion()
 
   return (
     <section id="notes" className="section-pad bg-[var(--paper)]">
       <div className="shell">
-        <div className="grid gap-10 lg:grid-cols-[.62fr_1.38fr]">
+        <div className="grid gap-12 lg:grid-cols-[.58fr_1.42fr]">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="font-mono text-xs text-[var(--orange)]">
-              FIELD NOTES
-            </p>
-            <h2 className="mt-7 max-w-md text-[clamp(2.8rem,5vw,5.5rem)] leading-[.94] tracking-[-.04em]">
-              Currently on my desk.
-            </h2>
-            <p className="mt-6 max-w-md leading-7 text-[var(--body)]">
-              A living record of what I&apos;m building, learning, questioning,
-              and improving. This is not a polished after-the-fact blog.
-            </p>
-            <div
-              className="mt-8 flex flex-wrap gap-2"
-              aria-label="Filter field notes"
-            >
-              {NOTE_FILTERS.map((item) => (
-                <button
-                  type="button"
-                  key={item}
-                  aria-pressed={filter === item}
-                  onClick={() => setFilter(item)}
-                  className={`rounded-full px-4 py-2 text-xs transition-colors ${filter === item ? "bg-[var(--ink)] text-white" : "bg-[var(--soft)] text-[var(--body)] hover:text-[var(--ink)]"}`}
-                >
-                  {item}
-                </button>
-              ))}
+            <div className="flex items-center gap-3 font-mono text-[10px] tracking-[.12em] text-[var(--orange)]">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[var(--orange)] opacity-35 motion-reduce:hidden" />
+                <span className="relative inline-flex size-2 rounded-full bg-[var(--orange)]" />
+              </span>
+              BUILD LOG / LIVE
             </div>
+            <h2 className="mt-7 max-w-md text-[clamp(3rem,5.4vw,5.8rem)] leading-[.9] tracking-[-.055em]">
+              Work in
+              <br />
+              public.
+            </h2>
+            <p className="mt-7 max-w-sm leading-7 text-[var(--body)]">
+              Two product directions I&apos;m actively studying. I haven&apos;t chosen
+              one to pursue yet, but both are sharpening how I think about
+              useful software.
+            </p>
+            <p className="mt-9 font-mono text-[10px] tracking-[.12em] text-[var(--muted)]">
+              SELECT AN ENTRY TO EXPAND
+            </p>
           </div>
-          <div className="min-h-[570px]">
+          <div className="overflow-hidden rounded-2xl bg-[var(--night)] px-5 py-7 text-[var(--cream)] sm:px-9 sm:py-10">
+            <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-6">
+              <div>
+                <p className="font-mono text-[10px] tracking-[.12em] text-[var(--orange)]">
+                  BUILD LOG
+                </p>
+                <p className="mt-2 text-sm text-white/60">
+                  Product decisions, experiments, and the work behind them.
+                </p>
+              </div>
+              <span className="font-mono text-[10px] tracking-[.12em] text-white/45">
+                {String(FIELD_NOTES.length).padStart(2, "0")} DIRECTIONS
+              </span>
+            </div>
             <AnimatePresence mode="popLayout">
-              {visibleNotes.map((note) => (
+              {FIELD_NOTES.map((note, index) => (
                 <m.article
                   layout
                   key={note.title}
@@ -1028,43 +1036,104 @@ function FieldNotes() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.28 }}
-                  className="group grid gap-5 py-7 first:pt-0 md:grid-cols-[110px_1fr_auto] md:items-start"
+                  className="group grid gap-5 border-b border-white/10 py-8 last:border-0 md:grid-cols-[116px_minmax(0,1fr)_48px] md:items-center md:gap-8 md:py-10"
                 >
-                  <div>
-                    <span className="font-mono text-[10px] text-[var(--orange)]">
-                      {note.date}
+                  <div className="flex items-start gap-3 md:block">
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/25 font-mono text-[10px] text-[var(--orange)]">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    <p className="mt-2 text-xs text-[var(--muted)]">
-                      {note.type}
-                    </p>
+                    <div className="md:mt-4">
+                      <p className="font-mono text-[10px] tracking-[.1em] text-white/50">
+                        {note.date}
+                      </p>
+                      <p className="mt-1 text-xs text-white/65">{note.type}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="max-w-2xl text-2xl leading-tight tracking-[-.03em] transition-colors group-hover:text-[var(--orange)] md:text-3xl">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedNote(note)}
+                    className="block w-full cursor-pointer text-left"
+                    aria-label={`Read more about ${note.title}`}
+                  >
+                    <h3 className="max-w-3xl text-[clamp(1.65rem,2.4vw,2.45rem)] leading-[1.04] tracking-[-.035em] text-balance transition-colors group-hover:text-[var(--orange)]">
                       {note.title}
                     </h3>
-                    <p className="mt-4 max-w-2xl leading-7 text-[var(--body)]">
+                    <p className="mt-3 max-w-3xl text-[15px] leading-7 text-white/75 text-pretty">
                       {note.summary}
                     </p>
-                    <div className="mt-5 flex gap-2">
+                    <div className="mt-5 flex flex-wrap gap-2">
                       {note.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full bg-[var(--soft)] px-3 py-1.5 font-mono text-[9px] text-[var(--muted)]"
+                          className="rounded-full bg-white/[.08] px-3 py-1.5 font-mono text-[9px] text-white/75"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                  </div>
-                  <span className="grid size-10 place-items-center rounded-lg bg-[var(--soft)] text-[var(--muted)] transition-[color,transform] group-hover:-translate-y-1 group-hover:bg-[var(--orange)] group-hover:text-white">
-                    <ArrowUpRight size={17} />
-                  </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedNote(note)}
+                    aria-label={`Read more about ${note.title}`}
+                    className="grid size-11 place-items-center self-end rounded-full bg-white text-[var(--night)] transition-[color,transform,background-color] hover:-translate-y-1 hover:bg-[var(--orange)] hover:text-white focus-visible:outline-white md:self-center"
+                  >
+                    <ArrowUpRight size={18} />
+                  </button>
                 </m.article>
               ))}
             </AnimatePresence>
           </div>
         </div>
       </div>
+      <Dialog.Root
+        open={selectedNote !== null}
+        onOpenChange={(open) => !open && setSelectedNote(null)}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm" />
+          <Dialog.Content asChild>
+            <m.div
+              initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
+              className="fixed top-1/2 left-1/2 z-[81] w-[min(680px,calc(100%-32px))] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-[var(--night)] p-6 text-[var(--cream)] shadow-[0_18px_55px_rgba(0,0,0,.42)] sm:p-9"
+            >
+              <Dialog.Title className="max-w-xl text-[clamp(2rem,4vw,3.4rem)] leading-[.98] tracking-[-.04em] text-balance">
+                {selectedNote?.title}
+              </Dialog.Title>
+              <Dialog.Description className="sr-only">
+                Details about what Yeabsira is learning.
+              </Dialog.Description>
+              <p className="mt-6 font-mono text-[10px] tracking-[.12em] text-[var(--orange)]">
+                {selectedNote?.detail.question}
+              </p>
+              <div className="mt-8 grid gap-7 sm:grid-cols-2">
+                <div>
+                  <p className="font-mono text-[10px] tracking-[.12em] text-white/45">WHAT I&apos;M LEARNING</p>
+                  <p className="mt-3 text-[15px] leading-7 text-white/80">{selectedNote?.detail.learning}</p>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] tracking-[.12em] text-white/45">WHY IT MATTERS TO ME</p>
+                  <p className="mt-3 text-[15px] leading-7 text-white/80">{selectedNote?.detail.why}</p>
+                </div>
+              </div>
+              <div className="mt-8 border-t border-white/10 pt-6">
+                <p className="font-mono text-[10px] tracking-[.12em] text-white/45">QUESTIONS I&apos;M HOLDING</p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+                  {selectedNote?.detail.prompts.map((prompt) => (
+                    <li key={prompt} className="text-sm leading-6 text-white/70">{prompt}</li>
+                  ))}
+                </ul>
+              </div>
+              <Dialog.Close className="mt-9 inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-[var(--night)] transition-colors hover:bg-[var(--orange)] hover:text-white">
+                Close note
+                <X size={15} />
+              </Dialog.Close>
+            </m.div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </section>
   )
 }

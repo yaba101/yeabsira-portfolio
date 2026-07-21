@@ -65,6 +65,33 @@ a {
   outline: 2px solid var(--orange);
 }
 
+.command-search:focus-visible {
+  outline: none;
+}
+
+.command-scroll {
+  scrollbar-color: rgba(244, 242, 233, 0.28) transparent;
+  scrollbar-width: thin;
+}
+
+.command-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+
+.command-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.command-scroll::-webkit-scrollbar-thumb {
+  border: 2px solid var(--night);
+  border-radius: 999px;
+  background: rgba(244, 242, 233, 0.26);
+}
+
+.command-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 242, 233, 0.42);
+}
+
 .skip-link {
   position: fixed;
   top: 0.75rem;

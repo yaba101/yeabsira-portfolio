@@ -134,9 +134,9 @@ export const PROFILE = {
 // components/site-header.tsx — primary + mobile nav.
 export const NAV_LINKS = [
   { label: "Work", href: "#work" },
-  { label: "Capabilities", href: "#capabilities" },
+  { label: "Product craft", href: "#capabilities" },
   { label: "Stack", href: "#stack" },
-  { label: "Notes", href: "#notes" },
+  { label: "Build log", href: "#notes" },
 ] as const
 
 // --- Practice strip -------------------------------------------------------
@@ -312,28 +312,42 @@ export const APPROACH_STEPS = [
 
 export const FIELD_NOTES = [
   {
-    type: "Building",
-    title: "A portfolio that demonstrates quality instead of claiming it",
+    type: "Exploring",
+    title: "How technical products earn their first customers",
     summary:
-      "Turning accessibility, responsive behavior, and edge states into an interface visitors can test themselves.",
+      "Learning the practical GTM work behind a product: a narrow audience, a real problem, a useful first conversation, and a repeatable signal.",
     date: "Now",
-    tags: ["Accessibility", "Product UI"],
+    tags: ["GTM", "Product strategy", "Discovery"],
+    detail: {
+      question: "How does a technical product find its first repeatable signal?",
+      learning:
+        "I’m studying how strong product teams choose a specific customer, listen for the language they use to describe the problem, and turn that into a clear product story before scaling distribution.",
+      why: "As a product engineer, I want to understand the decisions before the interface: who the work is for, what makes it urgent, and how a feature earns its place.",
+      prompts: [
+        "Who feels this problem most often?",
+        "What is the smallest useful promise?",
+        "Which conversations are worth repeating?",
+      ],
+    },
   },
   {
-    type: "Learning",
-    title: "Better motion begins with knowing when to stop it",
+    type: "Exploring",
+    title: "What a Forward Deployed Engineer brings to the team",
     summary:
-      "Exploring visibility-aware animation, reduced-motion fallbacks, and motion that explains state changes.",
+      "Learning how FDEs work close to customers, translate ambiguous workflows into reliable software, and bring those lessons back into the product.",
     date: "This week",
-    tags: ["Motion", "React"],
-  },
-  {
-    type: "Decision",
-    title: "Why production states belong in the first design pass",
-    summary:
-      "Loading, empty, error, and recovery states are the product—not cleanup work after the happy path.",
-    date: "Recently",
-    tags: ["Systems", "UX"],
+    tags: ["FDE", "Systems thinking", "Customer context"],
+    detail: {
+      question: "How can engineering become closer to the real work a customer is trying to do?",
+      learning:
+        "I’m looking at the FDE model as a mix of discovery, systems design, and delivery. The interesting part is not simply shipping quickly; it is learning enough context to build the right thing and leaving the product stronger for the next customer.",
+      why: "It connects the parts of product work I care about most: difficult workflows, practical constraints, clear interfaces, and direct feedback from the people using them.",
+      prompts: [
+        "What context is missing from the brief?",
+        "What should be solved in the product, not manually?",
+        "How does one customer lesson become a reusable system?",
+      ],
+    },
   },
 ] as const
 
@@ -349,6 +363,8 @@ export const STACK_PANES = [
       ["React 19", "ui"],
       ["Tailwind CSS", "styling"],
       ["Zustand / nuqs", "client & URL state"],
+      ["Prisma", "ORM"],
+      ["Drizzle ORM", "ORM"],
     ],
   },
   {
@@ -400,7 +416,8 @@ export const FOOTER_COLUMNS = [
     title: "Site",
     links: [
       ["Work", "#work"],
-      ["Capabilities", "#capabilities"],
+      ["Product craft", "#capabilities"],
+      ["Build log", "#notes"],
       ["Approach", "#process"],
       ["Stack", "#stack"],
       ["About", "#about"],
